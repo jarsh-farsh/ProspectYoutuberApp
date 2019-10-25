@@ -1,0 +1,14 @@
+.heading-border-container{
+    margin:25px 0;
+}
+
+.login-heading{
+    margin-left:10%;
+    width:150px;
+    padding:20px;
+}
+
+.section-window{
+    max-width: 800px;
+    margin: 25px auto;
+}

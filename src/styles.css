@@ -1,1 +1,125 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~font-awesome/css/font-awesome.min.css";
+
+@import url('https://fonts.googleapis.com/css?family=Bree+Serif|Exo&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Maven+Pro&display=swap');
+
+.heading-border{
+    width:100px;
+    height:100px;
+    background: #a31c1c;
+    position: relative;
+    color:white;
+    font-weight: bold;
+}
+
+.heading-border:before{
+    content: "";
+    position: absolute;
+    right:100%;
+    top:0px;
+    width:0;
+    height:0;
+    border-bottom:100px solid #a31c1c;
+    border-left: 80px solid transparent;
+}
+
+.heading-border:after{
+    content: "";
+    position: absolute;
+    left:100%;
+    top:0px;
+    width:0;
+    height:0;
+    border-top:100px solid #a31c1c;
+    border-right: 80px solid transparent;
+}
+
+.section-window{
+    width:95%;
+    max-width: 1400px;
+    padding:25px;
+    margin:0 auto;
+    background-color:white;
+    border:1px solid rgb(204, 203, 203);
+    border-radius: 8px;
+}
+
+.blog{
+    display:block;
+}
+
+.blog-header li{
+    display:inline-block;
+    font-size:large;
+    width:150px;
+}
+
+.blog-header a{
+    color:blue;
+}
+
+.blog-body{
+    padding:40px 25px;
+
+}
+
+.merch-heading{
+    width:160px; 
+    margin-left:10%; 
+    padding:20px
+}
+
+.blog-heading{
+    width:120px;
+    padding: 20px;
+    margin-left: 10%;
+}
+
+.form-validation{
+    color:red;
+}
+
+@media only screen and (max-width: 600px){
+    .heading-border{
+        height: 60px;
+    }
+    .heading-border:before{
+        border-bottom: 60px solid #a31c1c;
+        border-left: 45px solid transparent;
+    }
+    .heading-border:after{
+        border-top:60px solid #a31c1c;
+        border-right: 45px solid transparent;
+    }
+    .section-window{
+        width:100%;
+    }
+    .merch-heading{
+        font-size:32px;
+        padding:10px;
+        width:110px;
+    }
+    .blog-heading{
+        font-size:32px;
+        padding:10px;
+        width:85px;
+    }
+}
+
+
+/* Bootstrap override */
+
+.card{
+    width: 300px;
+    height: auto;
+    margin: 5px;
+    border: 0;
+    box-shadow: 8px 4px 20px 10px rgba(0,0,0,0.2);
+}
+
+.card-img-top{
+    width:150px;
+    height:150px;
+}

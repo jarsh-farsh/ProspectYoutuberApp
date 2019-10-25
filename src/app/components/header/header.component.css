@@ -1,0 +1,43 @@
+
+.home-header{
+    padding-bottom:20px;
+    background-color:black;
+    height:auto;
+}
+
+.social-nav a{
+    color:gray;
+    font-size:20px;
+}
+.social-nav a:hover{
+    color:white;
+}
+
+.nav-links{
+    text-align: center;
+    font-size:18px;
+}
+
+
+/*  Bootstrap override  */
+.navbar{
+    color:white;
+}
+
+.navbar-brand img{
+    height:100px;
+    width:375px;
+}
+
+.nav-item{
+    margin: 0 5px;
+}
+
+.nav-item{
+    border-bottom: 2px solid rgb(41, 43, 43);
+}
+
+.nav-item:hover{
+    border-bottom: 2px solid white;
+    cursor: pointer;
+}

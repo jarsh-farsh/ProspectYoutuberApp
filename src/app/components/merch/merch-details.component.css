@@ -1,0 +1,25 @@
+.merch-details-container{
+    padding:25px;
+}
+
+.merch-details{
+    padding:75px 25px;
+    border:1px solid gainsboro;
+}
+
+.merch-details img{
+    width:100%;
+    max-width: 300px;
+    min-width: 200px;
+    border: 1px solid gainsboro;
+    padding:15px;
+    height:auto;
+}
+
+.merch-description{
+    padding:25px;
+}
+
+.merch-description p{
+    font-size: large;
+}

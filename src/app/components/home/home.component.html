@@ -1,0 +1,111 @@
+<div class="home-container">
+
+    <div class="home-banner-section">
+        <img src="assets/images/home-banner.jpg">
+
+        <div class="home-banner row">
+            <button id="homeMerchBtn" class="col-md-4" (click)="changeYPosition($event)">
+                <h4>Merch</h4>
+                <i class="fa fa-arrow-circle-o-down"></i>
+            </button>
+            <button id="homeVideosBtn" class="col-md-4" (click)="changeYPosition($event)">
+                <h4>Videos</h4>
+                <i class="fa fa-arrow-circle-o-down"></i>
+            </button>
+            <button id="homeBlogBtn" class="col-md-4" (click)="changeYPosition($event)">
+                <h4>Blog</h4>
+                <i class="fa fa-arrow-circle-o-down"></i>
+            </button>
+        </div>
+    </div>
+
+    <div id="merchSection" class="home-merch-section">
+        <h1 class="heading-border merch-heading">Merch</h1>
+        <div class="section-window">
+            <h2>Hottest Items</h2>
+            <hr>
+            <div class="row justify-content-center">
+                <div *ngFor='let product of PopularProducts'>
+
+                    <div class="col-sm-4">
+                        <div class="card">
+
+                            <div class="card-body">
+                                <div class="text-center p-1">
+                                    <img [src]="product.ImageUrl" class="card-img-top" alt="product.Name">
+                                </div>
+                                <h5 class="card-title p-2">
+                                    <i class="fa fa-fire" style="color:red;" title="Hot Item"></i>
+                                    <a [routerLink]="['/merch', product.Id,'details']">{{product.Name}}</a>
+                                </h5>
+                                <p class="card-text p-2" style="font-weight: bold">{{ product.Price | currency }}</p>
+                            </div>
+                            <div class="card-footer text-right">
+                                <button id="product.Id" class="btn btn-outline-primary ">Add To Cart</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="text-center">
+                <a class="btn btn-outline-danger btn-lg" role="button" [routerLink]="['/merch']">
+                    Check out the rest of the merch!
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="videoSection" class="home-video-section">
+
+        <h1 class="heading-border">Videos</h1>
+        <div class="section-window">
+            <h2>Most Recent Video</h2>
+            <hr>
+            <div class="home-videos">
+                <iframe class="video" src="https://www.youtube.com/embed/QKgoNPIXEgs" frameborder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+            </div>
+            <hr>
+            <div class="text-center">
+                <a class="btn btn-outline-danger btn-lg" role="button" [href]="SocialMediaLinks[1]">
+                    Want more? Go to my channel here!
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="blogSection" class="home-blog-section">
+
+        <h1 class="heading-border blog-heading">Blog</h1>
+        <div class="section-window">
+            <h2>Recent Post</h2>
+            <hr>
+            <div class="blog">
+                <div class="blog-header">
+                    <ul>
+                        <li><a [routerLink]="['/blog', 'entry', LatestBlog.Id]"><i class="fa fa-sticky-note"></i> {{ LatestBlog.Title }}</a></li>
+                        <li><i class="fa fa-calendar"></i> {{ LatestBlog.Created_at | date }}</li>
+                        <li *ngIf="LatestBlog.User"><i class="fa fa-user"></i> {{ LatestBlog.User.Username }}</li>
+                        <li *ngIf="!LatestBlog.User"><i class="fa fa-user"></i> Pip</li>
+                    </ul>
+                </div>
+                <div class="blog-body">
+                    <p>{{ LatestBlog.Body }}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <a class="btn btn-outline-danger btn-lg" role="button" [routerLink]="['/blog']">
+                    Check out the rest of my blogs here!
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>

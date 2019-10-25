@@ -1,0 +1,124 @@
+
+.home-container{
+    font-family: 'Maven Pro', sans-serif;
+    background-color:rgb(241, 241, 241);
+}
+
+
+.home-banner-section{
+    background-color:black;
+    width:100%;
+    padding:25px;
+}
+
+.home-banner{
+    padding:25px;
+}
+
+.home-banner-section img{
+    display: block;
+    width:50%;
+    height:auto;
+    min-width:450px;
+    min-height:225px;
+    max-width:960;
+    max-height: 480px;
+    margin:0 auto;
+}
+
+.home-banner button{
+    border:1px solid white;
+    border-radius:10px;
+    background-color:#a31c1c;
+    max-width: 200px;
+    margin:10px auto;
+    font-size:48px;
+    font-weight:bold;
+    color:white;
+    text-align: center;
+    outline: none;
+    transition: all .25s ease-in-out;   
+}
+
+.home-banner button:hover{
+    cursor: pointer;
+    box-shadow: 0px 0px 55px -6px rgba(255,255,255,0.7);
+    transform: translateY(-10px);
+}
+
+.home-banner button h4 { padding-top: 15px;}
+
+.home-banner i{
+    font-size: 48px;
+}
+
+.home-merch-products{
+    width:100%;
+    max-width: 1400px;
+    padding:25px;
+    margin:0 auto;
+    background-color:white;
+    border:1px solid rgb(204, 203, 203);
+    border-radius: 8px;
+}
+
+.home-merch-section{
+    padding:25px 0;
+}
+
+.home-video-section{
+    padding:25px 0;
+}
+
+.home-video-section h1{
+    width:160px;
+    padding: 20px;
+    margin-left: 10%;
+}
+
+.home-videos{
+    position: relative;
+    width:100%;
+    height:0;
+    padding-top:66.6%
+}
+
+.home-videos iframe{
+    position: absolute;
+    padding:25px;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    width:100%;
+    height:100%;
+}
+
+.home-blog-section {
+    padding:25px 0;
+}
+
+@media only screen and (max-width: 1000px){
+    .home-banner button{
+        max-width: 150px !important;
+    }
+    .home-banner i{
+        font-size:32px;
+    }
+}
+
+@media only screen and (max-width: 600px){
+    .home-banner button{
+        max-width: 225px !important;
+    }
+    .home-banner i{
+        font-size:24px;
+    }
+    .home-video-section h1{
+        font-size:32px;
+        padding:10px;
+        width:115px;
+    }
+
+} 
+

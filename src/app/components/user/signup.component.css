@@ -1,0 +1,14 @@
+.heading-border-container{
+    margin:25px 0;
+}
+
+.signup-heading{
+    margin-left:10%;
+    width:190px;
+    padding:20px;
+}
+
+.section-window{
+    max-width: 800px;
+    margin: 25px auto;
+}

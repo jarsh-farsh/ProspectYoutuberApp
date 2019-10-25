@@ -1,0 +1,76 @@
+<div class="home-header">
+
+    <div class="navbar sticky-top navbar-dark bg-dark">
+        <a class="navbar-brand p-1" [routerLink]="['/home']">Prospect Youtuber</a>
+        <div class="navbar-nav ml-auto flex-row p-1">
+            
+            <div *ngIf="!isLoggedIn()" class="d-flex flex-row">
+                <a *ngIf="!isLoggedIn()" [routerLink]="['/signup']" class="nav-item nav-link p-2">Sign Up</a>
+                <a *ngIf="!isLoggedIn()" [routerLink]="['/login']" class="nav-item nav-link p-2">Login</a>
+            </div>
+
+            <div *ngIf="isLoggedIn()" class="d-flex flex-row">
+                <p style="color:white">Hello {{ user.Username }}!</p>
+                <button class="btn btn-dark btn-sm"
+                        (click)="Logout()">Logout</button>
+            </div>
+
+            <div *ngIf="isLoggedIn()">
+
+            </div>
+
+            <a [routerLink]="['/cart']" class="nav-item nav-link p-2">
+                <i class="fa fa-shopping-cart"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="top-nav">
+        <div class="navbar navbar-expand-sm navbar-dark my-1">
+            <div class="container">
+
+                <a class="navbar-brand" [routerLink]="['/home']">
+                    <img src="assets/images/Prospect-Youtuber.png" />
+                </a>
+
+                <div class="social-nav navbar-nav">
+                    <a class="nav-item nav-link" [href]="socialMediaLinks[0]"><i class="fa fa-twitter"></i></a>
+                    <a class="nav-item nav-link" [href]="socialMediaLinks[1]"><i class="fa fa-youtube"></i></a>
+                    <a class="nav-item nav-link" [href]="socialMediaLinks[2]"><i class="fa fa-instagram"></i></a>
+                    <a class="nav-item nav-link" [href]="socialMediaLinks[3]"><i class="fa fa-facebook"></i></a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="bottom-nav">
+        <div class="navbar navbar-expand-sm navbar-dark my-2">
+            <div class="container">
+
+                <img style="width:50px;height:50px" src="assets/images/game-controller.png" />
+
+                <button class="navbar-toggler ml-auto mr-auto" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="nav-links collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="navbar-nav ml-auto mr-auto">
+                        <a class="nav-item nav-link" [routerLink]="['/merch']">Merch</a>
+                        <a class="nav-item nav-link" [href]="socialMediaLinks[1]">Videos</a>
+                        <a class="nav-item nav-link" [routerLink]="['/blog']">Blog</a>
+                    </div>
+                </div>
+                <img style="width:50px;height:50px" src="assets/images/game-controller.png" />
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>

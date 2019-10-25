@@ -1,0 +1,38 @@
+<div class="merch-details-container">
+    <div class="merch-details">
+        <div class="row">
+            <div class="col-md-2 offset-md-1">
+                <div class="text-center p-1">
+                    <img [src]="product.ImageUrl" alt="product.Name">
+                </div>
+            </div>
+            <div class="col-md-6 offset-md-1">
+                <div class="text-center">
+                    <h1>{{product.Name}}</h1>
+                </div>
+                <div class="merch-description text-center">
+                    <p>{{product.Description}}</p>
+                </div>
+                <div class="text-right p-2" style="width:100%">
+                    <h4><strong>{{ product.Price | currency }}</strong></h4>
+                </div>
+                <div class="text-right p-2">
+                    <div class="form-inline justify-content-end">
+                        <label class="sr-only" for="quantityFormInput">Quantity</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Quantity: </div>
+                            </div>
+                            <input type="text" class="form-control" value="0" style="width:40px; margin-right:5px">
+                        </div>
+                        <button class="btn btn-outline-primary">Add To Cart</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <a class="btn btn-danger m-3" role="button" style="font-weight: bold;" [routerLink]="['/merch']">< Back To Merch</a>
+</div>

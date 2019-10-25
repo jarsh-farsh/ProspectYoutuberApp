@@ -1,0 +1,83 @@
+<div class="heading-border-container">
+    <h1 class="heading-border signup-heading">Sign Up</h1>
+</div>
+<div class="section-window">
+    <form style="padding:25px; max-width:500px; margin:auto" [formGroup]="signupForm">
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" placeholder="First Name" formControlName="firstName">
+            <span class="form-validation" *ngIf="!signupForm.get('firstName').valid &&
+                  (signupForm.get('firstName').dirty || signupForm.get('firstName').touched)">
+                First name is required
+            </span>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName">
+            <span class="form-validation" *ngIf="!signupForm.get('lastName').valid &&
+                  (signupForm.get('lastName').dirty || signupForm.get('lastName').touched)">
+                Last name is required
+            </span>
+        </div>
+
+        <div formGroupName="emailGroup">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" placeholder="Email Address" formControlName="email">
+                <span class="form-validation" *ngIf="!signupForm.get('emailGroup.email').valid &&
+                  (signupForm.get('emailGroup.email').dirty || signupForm.get('emailGroup.email').touched)">
+                    Email is required
+                </span>
+            </div>
+            <div class="form-group">
+                <label for="email">Confirm Email</label>
+                <input type="text" class="form-control" placeholder="Confirm Email Address"
+                    formControlName="confirmEmail">
+                <span class="form-validation"
+                    *ngIf="!signupForm.get('emailGroup.confirmEmail').valid &&
+                    (signupForm.get('emailGroup.confirmEmail').dirty || signupForm.get('emailGroup.confirmEmail').touched)">
+                    Email is required
+                </span>
+                <span class="form-validation"
+                    *ngIf="signupForm.get('emailGroup').errors?.match &&
+                      (signupForm.get('emailGroup.confirmEmail').dirty || signupForm.get('emailGroup.confirmEmail').touched)">
+                    Emails need to match!
+                </span>
+            </div>
+        </div>
+
+        <div formGroupName="passwordGroup">
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" placeholder="Password" formControlName="password">
+                <span class="form-validation"
+                    *ngIf="!signupForm.get('passwordGroup.password').valid &&
+                    (signupForm.get('passwordGroup.password').dirty || signupForm.get('passwordGroup.password').touched)">
+                    Password is required
+                </span>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" class="form-control" placeholder="Confirm Password"
+                    formControlName="confirmPassword">
+                <span class="form-validation"
+                    *ngIf="!signupForm.get('passwordGroup.confirmPassword').valid &&
+                    (signupForm.get('passwordGroup.confirmPassword').dirty || signupForm.get('passwordGroup.confirmPassword').touched)">
+                    Confirm password is required
+                </span>
+                <span class="form-validation"
+                    *ngIf="signupForm.get('passwordGroup').errors?.match &&
+                      (signupForm.get('passwordGroup.confirmPassword').dirty || signupForm.get('passwordGroup.confirmPassword').touched)">
+                    Passwords need to match!
+                </span>
+            </div>
+        </div>
+
+            <div class="form-group text-center">
+                <button class="btn btn-primary" style="width:200px; font-weight:bold;" (click)="confirmSignUp()"
+                    [disabled]="!signupForm.valid">Confirm</button>
+            </div>
+        
+
+    </form>
+</div>
