@@ -1,19 +1,20 @@
 import { IUser } from './user';
 
 export class Blog{
-    Id:number;
-    Created_by:number;
-    Created_at:Date;
-    Modified_on:Date;
-    Title:string;
-    Body:string;
-    Comments: number[];
+    id:number;
+    user?:IUser;
+    confirmed: boolean;
+    created_on:Date;
+    modified_on:Date;
+    title:string;
+    body:string;
+    comments?: Comment[];
 }
 
 export class Comment{
-    Id: number;
-    User?: number;
-    created_at: Date;
+    id: number;
+    user?: IUser;
+    created_on: Date;
     modified_on: Date;
     body:string;
 }

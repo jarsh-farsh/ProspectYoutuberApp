@@ -5,6 +5,10 @@
     height:auto;
 }
 
+.home-header p{
+    margin:10px 0;
+}
+
 .social-nav a{
     color:gray;
     font-size:20px;
@@ -16,6 +20,10 @@
 .nav-links{
     text-align: center;
     font-size:18px;
+}
+
+.top-nav{
+    margin-top:65px;
 }
 
 

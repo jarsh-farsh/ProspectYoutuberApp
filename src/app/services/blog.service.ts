@@ -1,60 +1,108 @@
 import { Injectable } from '@angular/core';
 import { Blog, Comment } from '../models/blog';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { tap, catchError, map, filter } from 'rxjs/operators';
+import { UserService } from './user.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BlogService {
 
-  Blogs: Blog[] = 
-      [{
-        Id: 0,
-        Created_by: 1,
-        Title: "Welcome!",
-        Body: "Hello everybody! Welcome to my new pad! I sure hope you like it. I hoped that this website would help me to not only sell merch and push my brand, but to also help keep you guys up to date with whats going on. Thanks for stopping by!",
-        Created_at: new Date("2019-10-10"),
-        Modified_on: new Date("2019-10-10"),
-        Comments: []
-      }]
-  
-  comments: Comment[] =[
-    {
-      Id:0,
-      User: 1,
-      body: "Oh, hi there!",
-      created_at: new Date(),
-      modified_on: new Date()
+  blogUrl = environment.apiUrl + "blogs";
+  commentUrl = environment.apiUrl + "comments";
+  blogCommentUrl = environment.apiUrl + "blogcomments"
+
+  constructor(private http: HttpClient) { }
+
+  getAllBlogs(): Observable<any[]> {
+    return this.http.get<any[]>(this.blogUrl).pipe(
+      map(res => {
+        var blogs = res.filter(b => b.confirmed === 0)
+        return blogs
+      }),
+      catchError(this.handleError)
+    )
+  }
+
+  getAllUnconfirmedBlogs(getUsers = false): Observable<any[]> {
+    return this.http.get<any[]>(this.blogUrl).pipe(
+      map(res => {
+        var blogs = res.filter(b => b.confirmed === 1)
+        return blogs
+      }),
+      catchError(this.handleError)
+    )
+  }
+
+  getBlogById(id: number): Observable<Blog>{
+    return this.http.get<Blog>(this.blogUrl+`/${id}`)
+    .pipe(
+      map(res => res[0]),
+      catchError(this.handleError)
+    )
+  }
+
+  getLatestBlog(): Observable<Blog>{
+    return this.http.get<Blog[]>(this.blogUrl)
+    .pipe(
+      map(res => res[res.length-1]),
+      catchError(this.handleError)
+    )
+  }
+
+  addBlog(blog: any): Observable<any> {
+    return this.http.post(this.blogUrl, blog).pipe(
+      catchError(this.handleError)
+    )
+  } 
+
+  updateBlog(blog: any): Observable<any> {
+    return this.http.put(this.blogUrl, blog).pipe(
+      catchError(this.handleError)
+    )
+  }
+
+  deleteBlog(blog: any): Observable<any>{
+    return this.http.delete(this.blogUrl, blog).pipe(
+      catchError(this.handleError)
+    )
+  }
+
+  getAllComments(): Observable<Comment[]>{
+    return this.http.get<Comment[]>(this.commentUrl).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  addComment(comment: any): Observable<any>{
+    return this.http.post(this.commentUrl, comment).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getAllBlogComments(blogId: number): Observable<any[]> {
+    return this.http.get<any[]>(this.blogCommentUrl+`/${blogId}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  deleteComment(id: number):Observable<any>{
+    return this.http.delete(this.commentUrl+`/${id}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  private handleError(err: HttpErrorResponse){
+    let errorMessage = '';
+    if(err.error instanceof ErrorEvent){
+      errorMessage = `An error occurred: ${err.error.message}`;
+    }else{
+      errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
     }
-  ]
-
-  constructor() { }
-
-  getAllBlogs(): Blog[] {
-    return this.Blogs;
+    console.error(errorMessage);
+    return throwError(errorMessage);
   }
-
-  getBlogById(id: number): Blog{
-    return this.Blogs.find(b => b.Id === id);
-  }
-
-  getLatestBlog(): Blog{
-    return this.Blogs[this.Blogs.length-1];
-  }
-
-  getAllBlogComments(blogId: number): Comment[] {
-    var comments:Comment[];
-    var blog = this.Blogs.find(b => b.Id === blogId);
-    if(blog){    
-      for(var i = 0; i<blog.Comments.length; i++){
-        comments.push(this.comments.find(c => c.Id === blog.Comments[i]));
-      }
-    }
-
-    return comments;
-  }
-
-  getBlogCommentCount(blogId: number): number{
-    return this.Blogs.find(b => b.Id === blogId).Comments.length;
-  }
-
 }

@@ -1,4 +1,4 @@
-<div class="merch-container">
+<div class="page-container">
 
     <div>
         <h1 class="heading-border merch-heading">Merch</h1>
@@ -27,15 +27,15 @@
                         <p><strong>Clothing Options</strong></p>
                         <div class="form-inline justify-content-center">
                             <div *ngFor="let tag of availableTags">
-                                <button *ngIf="tag.Type === 'Clothing'" (click)="addTag(tag.Id)"
-                                    class="btn btn-outline-dark m-1">{{ tag.Name }}</button>
+                                <button *ngIf="tag.type === 'Clothing'" (click)="addTag(tag.id)"
+                                    class="btn btn-outline-dark m-1">{{ tag.name }}</button>
                             </div>
                         </div>
                         <p class="p-1"><strong>Gender</strong></p>
                         <div class="form-inline justify-content-center">
                             <div *ngFor="let tag of availableTags">
-                                <button *ngIf="tag.Type === 'Gender'" (click)="addTag(tag.Id)"
-                                    class="btn btn-outline-dark m-1">{{ tag.Name }}</button>
+                                <button *ngIf="tag.type === 'Gender'" (click)="addTag(tag.id)"
+                                    class="btn btn-outline-dark m-1">{{ tag.name }}</button>
                             </div>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                             <p *ngIf="selectedTags.length === 0">None</p>
                         
                             <div *ngFor="let tag of selectedTags">
-                                <button (click)="removeTag(tag.Id)" class="btn btn-outline-dark m-1">{{ tag.Name }}</button>
+                                <button (click)="removeTag(tag.id)" class="btn btn-outline-dark m-1">{{ tag.name }}</button>
                             </div>
                         </div>
                     </div>
@@ -64,25 +64,7 @@
             <div *ngFor="let product of filteredProducts">
 
                 <div class="col-sm-3">
-                    <div class="card">
-
-                        <div class="card-body">
-                            <div class="text-center p-1">
-                                <img [src]="product.ImageUrl" class="card-img-top" alt="product.Name">
-                            </div>
-                            <h5 class="card-title p-2">
-                                <i *ngIf="isPopularProduct(product)" class="fa fa-fire" style="color:red;"
-                                    title="Hot Item"></i>
-                                <a [routerLink]="['/merch',product.Id,'details']">{{product.Name}}</a>
-                            </h5>
-                            <p class="card-text p-2" style="font-weight: bold">{{ product.Price | currency }}
-                            </p>
-                        </div>
-                        <div class="card-footer text-right">
-                            <button id="product.Id" class="btn btn-outline-primary ">Add To Cart</button>
-                        </div>
-
-                    </div>
+                    <prod-tab [product]='product'></prod-tab>
                 </div>
             </div>
         </div>

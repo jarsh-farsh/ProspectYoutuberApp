@@ -1,6 +1,3 @@
-.heading-border-container{
-    margin:25px 0;
-}
 
 .login-heading{
     margin-left:10%;
@@ -8,7 +5,10 @@
     padding:20px;
 }
 
-.section-window{
-    max-width: 800px;
-    margin: 25px auto;
+@media only screen and (max-width: 600px){
+    .login-heading{
+        font-size:32px;
+        padding:10px;
+        width:100px;
+    }
 }

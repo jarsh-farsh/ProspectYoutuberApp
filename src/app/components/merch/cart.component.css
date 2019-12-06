@@ -1,0 +1,40 @@
+
+.cart-heading{
+    margin-left:10%;
+    padding:20px;
+    width:120px;
+}
+
+.cart-container{
+    padding:50px 25px;
+}
+
+.cart-items ul{
+    list-style: none;
+    margin:0;
+    padding:0;
+}
+
+.cart-items ul:last-child{
+    border-bottom:1px solid gainsboro;
+}
+
+.cart-items li{
+    border-top:1px solid gainsboro;
+    padding:50px 25px;
+}
+
+.cart-total h5{
+    display:inline-block;
+    padding: 5px;
+    margin:20px 0;
+    border-bottom:1px solid gainsboro;
+}
+
+@media only screen and (max-width: 600px){
+    .cart-heading{
+        font-size:32px;
+        padding:10px;
+        width:90px;
+    }
+}

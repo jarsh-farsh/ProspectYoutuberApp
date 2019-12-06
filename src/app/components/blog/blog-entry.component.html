@@ -1,67 +1,107 @@
-<div class="m-5">
-    <a [routerLink]="['/blog']" role="button" class="btn btn-danger btn-lg">< Back To Blogs</a>
-</div>
+<div class="page-container">
+    <div class="m-5">
+        <a [routerLink]="['/blog']" role="button" class="btn btn-danger btn-lg">
+            Back To Blogs</a> </div>
+    <div class="section-window" style="margin:25px auto; max-width: 1000px;">
 
-<div class="section-window" style="margin:25px auto; max-width: 1000px;">
-
-    <div class="p-5">
-
-        <h1>{{ blog.Title }}</h1>
-        <div class="p-3">
-            <h4><i class="fa fa-calendar"></i> {{ blog.Created_at | date }}</h4>
+        <div *ngIf="blog?.confirmed ===1" class="blog-review-tools">
+            <button class="btn btn-danger btn-lg" title="Delete blog entry" (click)="confirmDeleteBlog()">Delete</button>
+            <button class="btn btn-primary btn-lg" title="Edit blog entry" (click)="confirmEditBlog()">Edit</button>
+            <button class="btn btn-success btn-lg" title="Confirm blog entry" (click)="confirmBlog()">Confirm</button>
+            <h1>Under Review</h1>
         </div>
-        <hr>
-        <div class="p-2">
-            <p>{{ blog.Body }}</p>
-        </div>
-        <div class="text-right p-2">
-            <h4 *ngIf="blog.User"><i class="fa fa-user"></i> {{ blog.User.Username }}</h4>
-            <h4 *ngIf="!blog.User"><i class="fa fa-user"></i> Pip</h4>
-        </div>
-        <hr>
 
-        <div class="comments">
-            <div class="d-flex justify-content-between">
-                <h5>{{ blogCommentCount }} Comments</h5>
-                <button *ngIf="!addingComment" (click)="toggleCommentAdd()" class="btn btn-primary">Add Comment</button>
-                <button *ngIf="addingComment" (click)="toggleCommentAdd()" class="btn btn-primary">Hide</button>
+        <div class="p-5">
+
+            <h1>{{ blog?.title }}</h1>
+            <div class="p-3">
+                <h4><i class="fa fa-calendar"></i> {{ blog?.created_on | date }}</h4>
             </div>
-            <div *ngIf="addingComment">
-                <form [formGroup]="commentForm">
-                    <div class="form-group">
-                        <div class="d-flex" style="margin-top: 10px;">
-                            <p style="margin-right:5px">Current User:</p>
-                            <p *ngIf="currentUser">{{ currentUser.Username }}</p>
-                            <p *ngIf="!currentUser">Guest</p>
-                        </div>
-                        <textarea class="form-control" rows="3" placeholder="Enter a Comment..." formControlName="body"
-                            required></textarea>
-                        <div class="form-validation">
-                            <span class="form-validation" *ngIf="commentForm.get('body').errors?.required && 
-                                     (commentForm.get('body').dirty || commentForm.get('body').touched)">
-                                Please enter a comment.
-                            </span>
-                            <span class="form-validation" *ngIf="commentForm.get('body').errors?.maxlength">
-                                Comments are only allowed to be 250 characters long. Please shorten your comment.
-                            </span>
-                        </div>
-                        <div class="text-right">
-                            <button (click)="submitComment()" 
-                                    class="btn btn-outline-primary m-1"
-                                    [disabled]="!commentForm.valid">Submit</button>
+            <hr>
+            <div class="p-2">
+                <p>{{ blog?.body }}</p>
+            </div>
+            <div class="text-right p-2">
+                <h4 *ngIf="blog?.user"><i class="fa fa-user"></i> {{ blog?.user.username }}</h4>
+                <h4 *ngIf="!blog?.user"><i class="fa fa-user"></i> Pip</h4>
+            </div>
+            <hr>
+
+            <div *ngIf="blog?.confirmed === 0" class="comments">
+                <div class="d-flex justify-content-between">
+                    <h5>{{ blogCommentCount }} Comments</h5>
+                    <button *ngIf="!addingComment" (click)="toggleCommentAdd()" class="btn btn-primary">Add
+                        Comment</button>
+                    <button *ngIf="addingComment" (click)="toggleCommentAdd()" class="btn btn-primary">Hide</button>
+                </div>
+                <div *ngIf="addingComment">
+
+                    <div *ngIf="!currentUser">
+                        <div class="text-center p-5">
+                            <h3>Please login to post a comment!</h3>
+                            <h5>You can login <a [routerLink]="['/login']">here</a>!</h5>
                         </div>
                     </div>
-                </form>
-            </div>
-
-            <div *ngFor="let comment of blogComments">
-
-                <div>
-                    <h5 *ngIf="comment.User">{{ comment.User.Username }}</h5>
-                    <h5 *ngIf="!comment.User">Guest</h5>
-                    <p>{{comment.created_on | date}}</p>
+                    <div *ngIf="currentUser">
+                        <form [formGroup]="commentForm">
+                            <div class="form-group">
+                                <div class="d-flex" style="margin-top: 10px;">
+                                    <p style="margin-right:5px">Current User:</p>
+                                    <p>{{ currentUser.username }}</p>
+                                </div>
+                                <textarea class="form-control" rows="3" placeholder="Enter a Comment..."
+                                    formControlName="body" required></textarea>
+                                <div class="form-validation">
+                                    <span class="form-validation" *ngIf="commentForm.get('body').errors?.required && 
+                                        (commentForm.get('body').dirty || commentForm.get('body').touched)">
+                                        Please enter a comment.
+                                    </span>
+                                    <span class="form-validation" *ngIf="commentForm.get('body').errors?.maxlength">
+                                        Comments are only allowed to be 250 characters long. Please shorten your
+                                        comment.
+                                    </span>
+                                </div>
+                                <div class="text-right">
+                                    <button (click)="submitComment()" class="btn btn-outline-primary m-1"
+                                        [disabled]="!commentForm.valid"
+                                        [title]="!commentForm.valid ? 'Please write a comment before submitting' : 'Submit'">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
+                <hr>
+
+
+                <div *ngIf='blog'>
+                    <div *ngFor="let comment of blog.comments">
+
+                        <div class="comment">
+                            <div class="comment-header">
+                                <h5 *ngIf="comment.user">{{ comment.user.username }}</h5>
+                                <h5 *ngIf="!comment.user">Guest</h5>
+                                <p><i class="fa fa-calendar m-1"></i>{{comment.created_on | date}}</p>
+                                <div *ngIf="currentUser" class="float-right">
+                                    <button *ngIf="comment.user.username === currentUser.username"
+                                        class="btn btn-danger btn-sm" title="Delete comment"
+                                        (click)="confirmDelete(comment.id)">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <hr>
+                            <p class="comment-body">{{comment.body}}</p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div *ngIf="blog?.confirmed ===1" class="blog-review-tools">
+                    <button class="btn btn-danger btn-lg" title="Delete blog entry" (click)="confirmDeleteBlog()">Delete</button>
+                    <button class="btn btn-primary btn-lg" title="Edit blog entry" (click)="confirmEditBlog()">Edit</button>
+                    <button class="btn btn-success btn-lg" title="Confirm blog entry" (click)="confirmBlog()">Confirm</button>
             </div>
         </div>
     </div>

@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>{{title}}</h2>
+<div *ngIf="isComment || isBlogDelete || isBlogConfirm">
+
+    <mat-dialog-content class="text-center">
+        <h4>{{description}}</h4>
+    </mat-dialog-content>
+
+</div>
+
+<div *ngIf="isBlogEdit">
+
+    <mat-dialog-content class="text-center">
+        <h4>{{description}}</h4>
+    </mat-dialog-content>
+
+    <form [formGroup]="form" style="width: 100%; max-width: 1400px; min-width: 400px;">
+        <div class="form-group">
+            <label>Title</label>
+            <input type="text" class="form-control" formControlName="title">
+        </div>
+        <div class="form-group">
+            <label>Body</label>
+            <textarea class="form-control" formControlName="body" rows=5></textarea>
+        </div>
+    </form>
+</div>
+
+<mat-dialog-actions class="float-right">
+    <button class="btn btn-light m-1" (click)="cancel()">Cancel</button>
+    <button class="btn btn-danger m-1" (click)="confirm()">Confirm</button>
+</mat-dialog-actions>

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, AbstractControl } from '@angular/forms';
+import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
+import { GlobalMessageService } from 'src/app/services/global-message.service';
 
 function emailMatcher(c: AbstractControl): { [key: string]: boolean } | null{
   const emailControl = c.get('email');
@@ -38,9 +41,14 @@ function passwordMatcher(c: AbstractControl): { [key: string]: boolean } | null{
 export class SignupComponent implements OnInit {
 
   signupForm: FormGroup;
+  errorMessage: string;
+  formError: string;
 
   constructor(private fb:FormBuilder,
-              private authSerivce: AuthService) { }
+              private userService: UserService,
+              private authService: AuthService,
+              private gmSerivce: GlobalMessageService,
+              private router: Router) { }
 
   ngOnInit() {
     this.signupForm = this.fb.group({
@@ -58,7 +66,35 @@ export class SignupComponent implements OnInit {
   }
 
   confirmSignUp(): void{
-    
+    var user = {first_name: this.signupForm.get('firstName').value, 
+                last_name: this.signupForm.get('lastName').value,
+                username: this.signupForm.get('emailGroup').get('email').value,
+                password: this.signupForm.get('passwordGroup').get('password').value,
+                role_id: 3};
+
+    this.userService.addUser(user).subscribe({
+      next: data =>{
+        if(data.error){
+          this.formError = data.message;
+        }else{
+          this.authService.login(user.username, user.password).subscribe({
+            next: user => {
+              if(!user){
+                this.formError = "There was an error logging in your new account! Oops!";
+              }else{
+                this.gmSerivce.addMessage(`Welcome aboard ${user.username}!`, 'info');
+                if (this.authService.redirectUrl) {
+                  this.router.navigateByUrl(this.authService.redirectUrl);
+                } else {
+                  this.router.navigate(['/home']);
+                }
+              }
+            }
+          });
+        }
+      },
+      error: err => this.errorMessage = err
+    })
   }
 
 }

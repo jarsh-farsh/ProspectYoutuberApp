@@ -1,6 +1,3 @@
-.heading-border-container{
-    margin:25px 0;
-}
 
 .signup-heading{
     margin-left:10%;
@@ -11,4 +8,12 @@
 .section-window{
     max-width: 800px;
     margin: 25px auto;
+}
+
+@media only screen and (max-width: 600px){
+    .signup-heading{
+        font-size:32px;
+        padding:10px;
+        width:140px;
+    }
 }

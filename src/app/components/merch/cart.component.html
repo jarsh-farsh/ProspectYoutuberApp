@@ -1,1 +1,76 @@
-<p>cart works!</p>
+<div class="page-container">
+    <h1 class="heading-border cart-heading">Cart</h1>
+    <div class="section-window">
+        <div class="cart-container">
+            <div *ngIf="currentCart.length === 0">
+
+                <div class="text-center">
+                    <h1>There is nothing in your cart</h1>
+                    <h3>Go and take a look at the merch</h3>
+                    <a class="btn btn-danger btn-lg" role="button" [routerLink]="['/merch']">Go To Merch</a>
+                </div>
+
+            </div>
+            <div *ngIf="currentCart.length > 0">
+
+                <div class="cart-items">
+                    <ul>
+                        <div *ngFor="let item of currentCart; let i = index;">
+                            <div>
+                                <li>
+                                    <div class="d-flex justify-content-between">
+                                        <div class="d-flex text-left">
+                                            <img [src]="item.Product.image_url"
+                                                 style="width:100px; height:100px">
+                                            <h5 style="padding:50px 10px;">{{ item.Product.name }}</h5>
+                                        </div>
+                                        <div class="text-right" style="width:160px">
+                                                <div class="input-group m-1">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">Quantity: </div>
+                                                        </div>
+                                                        <input type="text" class="form-control text-right" [placeholder]="item.Quantity" [(ngModel)]="updateQuantity[i]">
+                                                    </div>
+                                            <p>Cost: {{ item.Quantity * item.Product.price | currency}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <button class="btn btn-primary btn-sm m-1" style="font-weight: bold" title="Update"
+                                            (click)="updateItem(item.Product.id, updateQuantity[i], i)">Update</button>
+                                        <button class="btn btn-danger btn-sm m-1" style="font-weight: bold" title="Remove"
+                                            (click)="removeItemFromCart(item.Product.id, i)">Remove</button>
+                                        <p *ngIf="showErrorMessage[i]" class="form-validation">{{ errorMessage[i] }}</p>
+                                    </div>
+                                </li>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+
+                <div class="cart-total text-right">
+                    <h5>Total: {{ CartTotal | currency }}</h5>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <div class="m-3">
+                        <button class="btn btn-warning btn-lg" 
+                                style="font-weight: bold;" 
+                                (click)="clearCart()">
+                            Clear Cart
+                        </button>
+                    </div>
+
+                    <div class="m-3">
+                        <button class="btn btn-primary btn-lg" 
+                                style="font-weight: bold; width:150px"
+                                (click)="checkout()">
+                            Checkout
+                        </button>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

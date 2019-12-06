@@ -1,0 +1,36 @@
+.message-container{
+    padding:5px;
+}
+
+.success{
+    background-color: rgb(0, 173, 0);
+}
+
+.error{
+    background-color: rgb(224, 0, 0);
+}
+
+.info{
+    background-color: rgb(40, 40, 241);
+}
+
+button{
+    border: none;
+    text-decoration: none;
+    background: none;
+    color: white;
+}
+
+button:hover,
+button:focus {
+    font-weight: bold;
+}
+
+button:focus{
+    outline: 0;
+}
+
+button:active{
+    border: none;
+    text-decoration: none;
+}

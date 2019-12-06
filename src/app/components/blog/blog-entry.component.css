@@ -1,0 +1,46 @@
+.comment{
+    border: 1px solid gainsboro;
+    border-radius: 10px;
+    padding:5px;
+    margin: 5px 0;
+}
+
+.comment-header{
+    padding:5px;
+    margin-bottom:-15px;
+    width:100%;
+}
+
+.comment-header h5{
+    display: inline-block;
+    padding-right: 5px;
+}
+
+.comment-header h5::after{
+    content: " ";
+}
+
+.comment-header p{
+    display: inline-block;
+    width:250px;
+}
+
+.comment-body{
+    padding:0 15px;
+}
+
+.blog-review-tools{
+    text-align: center;
+}
+
+.blog-review-tools h1{
+    width:350px;
+    margin:10px auto;
+    padding:20px 35px;
+    border-left:10px solid gainsboro;
+    background-color:rgb(247, 247, 247);
+}
+
+.blog-review-tools button{
+    margin: 0 5px;
+}

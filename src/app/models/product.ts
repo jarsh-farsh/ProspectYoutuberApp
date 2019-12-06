@@ -1,12 +1,12 @@
 
 export class Product {
-    Id:number;
-    ProductCode:string;
-    ImageUrl?:string;
-    Name:string;
-    Price:number;
-    Description:string;
-    Tags?: number[];
-    QuantityInStock:number;
-    QuantitySold:number;
+    id:number;
+    product_code:string;
+    image_url:string[];
+    name:string;
+    price:number;
+    description:string;
+    Tags: number[];
+    quantity_in_stock:number;
+    quantity_sold:number;
 }

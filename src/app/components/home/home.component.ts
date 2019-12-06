@@ -13,30 +13,37 @@ import { Blog } from '../../models/blog';
 })
 export class HomeComponent implements OnInit {
 
-  get PopularProducts(): Product[]{
-    return this.products.getPopularProducts();
-  }
+  popularProducts: Product[] = [];
+  latestBlog: Blog;
+  errorMessage: any;
 
   get SocialMediaLinks(): string[]{
     return this.socialMedia.getSMLinks();
   }
 
-  get LatestBlog(): Blog{
-    return this.blogs.getLatestBlog();
+  get canAddToCart(): boolean{
+    return this.prodService.canAddToCart;
   }
 
-  constructor(private products: ProductService,
-              private blogs: BlogService,
+  constructor(private prodService: ProductService,
+              private blogService: BlogService,
               private socialMedia: SocialMediaData) { }
 
   ngOnInit() {
+    this.prodService.getPopularProducts().subscribe({
+      next: popularProds => this.popularProducts = popularProds,
+      error: err => this.errorMessage = err
+    });
 
+    this.blogService.getLatestBlog().subscribe({
+      next: blog => this.latestBlog = blog,
+      error: err => this.errorMessage = err
+    })
   }
 
   changeYPosition(event) {
 
     var buttonId = event.currentTarget.id;
-    console.log("Test: ", event.currentTarget);
 
     var target = null;
     var targetPos = null;
@@ -55,7 +62,6 @@ export class HomeComponent implements OnInit {
 
     if (target != null) {
       targetPos = target.position();
-      console.log("Target Position: ", targetPos.top);
 
       $('html, body').animate({ scrollTop: targetPos.top }, 800)
     }

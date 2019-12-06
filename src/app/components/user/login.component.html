@@ -1,8 +1,12 @@
-<div class="heading-border-container">
+<div class="page-container">
         <h1 class="heading-border login-heading">Login</h1>
     </div>
     <div class="section-window">
         <form style="padding:125px 25px; max-width:500px; margin:auto" [formGroup]="loginForm">
+            <div class="text-center p-1">
+                <span class="form-validation">{{errorMessage}}</span>
+            </div>
+
             <div style="padding: 25px 0">
                 <h3>Login </h3>
             </div>
@@ -16,7 +20,7 @@
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="text" class="form-control" placeholder="Password" formControlName="password">
+                <input type="password" class="form-control" placeholder="Password" formControlName="password">
                 <span class="form-validation" *ngIf="!loginForm.get('password').valid &&
                       (loginForm.get('password').dirty || loginForm.get('password').touched)">
                     Password is required
@@ -24,7 +28,9 @@
             </div>
     
             <div class="form-group text-center">
-                <button class="btn btn-primary" style="width:200px; font-weight:bold;" (click)="confirmSignUp()"
+                <button class="btn btn-primary" 
+                        style="width:200px; font-weight:bold;" 
+                        (click)="confirmSignIn()"
                         [disabled]="!loginForm.valid">Login</button>
             </div>
 
@@ -33,6 +39,6 @@
                 <p>Don't have an account? No problem! Go <a [routerLink]="['/signup']">here</a>!</p>
                 
             </div>
-            
+
         </form>
     </div>

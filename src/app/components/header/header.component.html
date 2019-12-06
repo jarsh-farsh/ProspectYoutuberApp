@@ -1,27 +1,33 @@
 <div class="home-header">
+    <div class="fixed-top">
+        <div class="navbar navbar-dark bg-dark">
+            <a class="navbar-brand p-1" [routerLink]="['/home']">PY</a>
+            <div class="navbar-nav ml-auto flex-row p-1">
 
-    <div class="navbar sticky-top navbar-dark bg-dark">
-        <a class="navbar-brand p-1" [routerLink]="['/home']">Prospect Youtuber</a>
-        <div class="navbar-nav ml-auto flex-row p-1">
-            
-            <div *ngIf="!isLoggedIn()" class="d-flex flex-row">
-                <a *ngIf="!isLoggedIn()" [routerLink]="['/signup']" class="nav-item nav-link p-2">Sign Up</a>
-                <a *ngIf="!isLoggedIn()" [routerLink]="['/login']" class="nav-item nav-link p-2">Login</a>
+                <div *ngIf="!isLoggedIn" class="d-flex flex-row">
+                    <a [routerLink]="['/signup']" class="nav-item nav-link p-2">Sign Up</a>
+                    <a [routerLink]="['/login']" class="nav-item nav-link p-2">Login</a>
+                </div>
+
+                <div *ngIf="isLoggedIn" class="d-flex flex-row align-contents-center">
+                    <p style="color:white">Hello {{ currentUser?.username }}!</p>
+                    <a class="nav-item nav-link p-2" (click)="Logout()">Logout</a>
+                </div>
+
+                <div *ngIf="isLoggedIn">
+
+                </div>
+
+                <a *ngIf="isLoggedIn" [routerLink]="['/cart']" class="nav-item nav-link p-2">
+                    <i class="fa fa-shopping-cart"></i>
+                </a>
             </div>
 
-            <div *ngIf="isLoggedIn()" class="d-flex flex-row">
-                <p style="color:white">Hello {{ user.Username }}!</p>
-                <button class="btn btn-dark btn-sm"
-                        (click)="Logout()">Logout</button>
-            </div>
+        </div>
 
-            <div *ngIf="isLoggedIn()">
 
-            </div>
-
-            <a [routerLink]="['/cart']" class="nav-item nav-link p-2">
-                <i class="fa fa-shopping-cart"></i>
-            </a>
+        <div *ngFor="let msg of globalMessages">
+            <global-message [message]='msg'></global-message>
         </div>
     </div>
 
@@ -63,6 +69,7 @@
                         <a class="nav-item nav-link" [routerLink]="['/merch']">Merch</a>
                         <a class="nav-item nav-link" [href]="socialMediaLinks[1]">Videos</a>
                         <a class="nav-item nav-link" [routerLink]="['/blog']">Blog</a>
+                        <a *ngIf="canAccessAdmin()" class="nav-item nav-link" [routerLink]="['/admin']">Admin</a>
                     </div>
                 </div>
                 <img style="width:50px;height:50px" src="assets/images/game-controller.png" />

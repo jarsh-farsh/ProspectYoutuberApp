@@ -5,43 +5,32 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { HomeComponent } from './components/home/home.component';
-import { BlogComponent } from './components/blog/blog.component';
-import { MerchComponent } from './components/merch/merch.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MerchDetailsComponent } from './components/merch/merch-details.component';
-import { MerchRoutingModule } from './components/merch/merch-routing.module';
-import { BlogEntryComponent } from './components/blog/blog-entry.component';
-import { LoginComponent } from './components/user/login.component';
-import { SignupComponent } from './components/user/signup.component';
-import { BlogRoutingModule } from './components/blog/blog-routing.module';
-import { UserRoutingModule } from './components/user/user-routing.module';
-import { CartComponent } from './components/merch/cart.component';
-import { CheckoutComponent } from './components/merch/checkout.component';
+import { MerchModule } from './components/merch/merch.module';
+import { UserModule } from './components/user/user.module';
+import { BlogModule } from './components/blog/blog.module';
+import { HomeModule } from './components/home/home.module';
+import { GlobalMessageComponent } from './components/shared/global-message.component';
+import { AdminModule } from './components/admin/admin.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    HomeComponent,
-    BlogComponent,
-    MerchComponent,
-    MerchDetailsComponent,
-    BlogEntryComponent,
-    LoginComponent,
-    SignupComponent,
-    CartComponent,
-    CheckoutComponent
+    GlobalMessageComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MerchRoutingModule,
-    BlogRoutingModule,
-    UserRoutingModule,
-    AppRoutingModule
+    BrowserAnimationsModule,
+    FileUploadModule,
+    MerchModule,
+    UserModule,
+    BlogModule,
+    AdminModule,
+    AppRoutingModule,
+    HomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

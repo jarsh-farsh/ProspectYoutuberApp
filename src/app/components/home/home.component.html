@@ -25,26 +25,10 @@
             <h2>Hottest Items</h2>
             <hr>
             <div class="row justify-content-center">
-                <div *ngFor='let product of PopularProducts'>
+                <div *ngFor='let product of popularProducts'>
 
                     <div class="col-sm-4">
-                        <div class="card">
-
-                            <div class="card-body">
-                                <div class="text-center p-1">
-                                    <img [src]="product.ImageUrl" class="card-img-top" alt="product.Name">
-                                </div>
-                                <h5 class="card-title p-2">
-                                    <i class="fa fa-fire" style="color:red;" title="Hot Item"></i>
-                                    <a [routerLink]="['/merch', product.Id,'details']">{{product.Name}}</a>
-                                </h5>
-                                <p class="card-text p-2" style="font-weight: bold">{{ product.Price | currency }}</p>
-                            </div>
-                            <div class="card-footer text-right">
-                                <button id="product.Id" class="btn btn-outline-primary ">Add To Cart</button>
-                            </div>
-
-                        </div>
+                        <prod-tab [product]='product'></prod-tab>
                     </div>
 
                 </div>
@@ -89,14 +73,14 @@
             <div class="blog">
                 <div class="blog-header">
                     <ul>
-                        <li><a [routerLink]="['/blog', 'entry', LatestBlog.Id]"><i class="fa fa-sticky-note"></i> {{ LatestBlog.Title }}</a></li>
-                        <li><i class="fa fa-calendar"></i> {{ LatestBlog.Created_at | date }}</li>
-                        <li *ngIf="LatestBlog.User"><i class="fa fa-user"></i> {{ LatestBlog.User.Username }}</li>
-                        <li *ngIf="!LatestBlog.User"><i class="fa fa-user"></i> Pip</li>
+                        <li><a *ngIf=latestBlog [routerLink]="['/blog', 'entry', latestBlog.id]"><i class="fa fa-sticky-note"></i> {{ latestBlog?.title }}</a></li>
+                        <li><i class="fa fa-calendar"></i> {{ latestBlog?.created_on | date }}</li>
+                        <li *ngIf="latestBlog?.user"><i class="fa fa-user"></i> {{ latestBlog?.user.Username }}</li>
+                        <li *ngIf="!latestBlog?.user"><i class="fa fa-user"></i> Pip</li>
                     </ul>
                 </div>
                 <div class="blog-body">
-                    <p>{{ LatestBlog.Body }}</p>
+                    <p>{{ latestBlog?.body }}</p>
                 </div>
             </div>
             <hr>

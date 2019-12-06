@@ -11,12 +11,20 @@ export class BlogComponent implements OnInit {
 
   blogs: Blog[];
   LatestBlog: Blog;
+  errorMessage: any;
 
   constructor(private blogService: BlogService) { }
 
   ngOnInit() {
-    this.blogs = this.blogService.getAllBlogs();
-    this.LatestBlog = this.blogService.getLatestBlog();
+    this.blogService.getAllBlogs().subscribe({
+      next: blogs => {
+        this.blogs = blogs;
+        this.LatestBlog = this.blogs[this.blogs.length-1]
+      },
+      error: err => this.errorMessage = err
+    });
+
+
   }
 
 }

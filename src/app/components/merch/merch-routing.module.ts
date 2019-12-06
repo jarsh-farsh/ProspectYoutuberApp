@@ -3,11 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { MerchComponent } from './merch.component';
 import { MerchDetailsComponent } from './merch-details.component';
 import { CartComponent } from './cart.component';
+import { AuthGuard } from '../user/auth.guard';
 
 const routes: Routes = [
     { path: 'merch', component: MerchComponent },
     { path: 'merch/:id/details', component: MerchDetailsComponent },
-    { path: 'cart', component: CartComponent }
+    { path: 'cart', component: CartComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

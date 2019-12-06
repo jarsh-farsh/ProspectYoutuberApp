@@ -1,0 +1,37 @@
+[
+    {
+        "Id": 7,
+        "Type": "Clothing",
+        "Name": "Shirt"
+      },
+      {
+        "Id": 1,
+        "Type": "Clothing",
+        "Name": "Hoodie"
+      },
+      {
+        "Id": 2,
+        "Type": "Clothing",
+        "Name": "Pin"
+      },
+      {
+        "Id": 3,
+        "Type": "Clothing",
+        "Name": "Socks"
+      },
+      {
+        "Id": 4,
+        "Type": "Clothing",
+        "Name": "Pants"
+      },
+      {
+        "Id": 5,
+        "Type": "Gender",
+        "Name": "Male"
+      },
+      {
+        "Id": 6,
+        "Type": "Gender",
+        "Name": "Female"
+      }
+]

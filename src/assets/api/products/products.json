@@ -1,0 +1,68 @@
+[
+    {
+        "id": 0,
+        "name": "Plain Shirt",
+        "product_code": "abc-0001",
+        "image_url": "assets/images/merch-plain-shirt.png",
+        "price": 29.99,
+        "description": "A nice plain shirt for somebody that just doesn't care about style. 100% Cotton",
+        "Tags": [7,5],
+        "quantity_in_stock": 25,
+        "quantity_sold": 22
+      },
+      {
+        "id": 1,
+        "name": "Fancy Shirt",
+        "product_code": "abc-0002",
+        "image_url": "assets/images/merch-fancy-shirt.png",
+        "price": 39.99,
+        "description": "A comfy cotton shirt with a nice design made by some indie artist. 100% Cotton",
+        "Tags": [7,5],
+        "quantity_in_stock": 15,
+        "quantity_sold": 32
+      },
+      {
+        "id": 2,
+        "name": "Skull Hoodie",
+        "product_code": "abd-0001",
+        "image_url": "assets/images/merch-hoodie.png",
+        "price": 49.99,
+        "description": "This hoodie has a sweet skull drawn on it. Very thick and warm!",
+        "Tags": [1,5,6],
+        "quantity_in_stock": 5,
+        "quantity_sold": 12
+      },
+      {
+        "id": 3,
+        "name": "Charm Hoodie",
+        "product_code": "abd-0002",
+        "image_url": "assets/images/merch-hoodie.png",
+        "price": 49.99,
+        "description": "This hoodie has a four leaf clover on it! It may just bring you luck! Well, maybe not, but at least it will keep you warm.",
+        "Tags": [1,5,6],
+        "quantity_in_stock": 25,
+        "quantity_sold": 3
+      },
+      {
+        "id": 4,
+        "name": "Stripe Socks",
+        "product_code": "abe-0001",
+        "image_url": "assets/images/merch-socks.png",
+        "price": 19.99,
+        "description": "Some striped socks to provide some much needed fashion to your feet!",
+        "Tags": [3,5,6],
+        "quantity_in_stock": 55,
+        "quantity_sold": 32
+      },
+      {
+        "id": 5,
+        "name": "Logo Pin",
+        "product_code": "abf-0001",
+        "image_url": "assets/images/merch-pin.png",
+        "price": 4.99,
+        "description": "A pin with the channels logo on it. Show your support for the channel!",
+        "Tags": [2,5,6],
+        "quantity_in_stock": 95,
+        "quantity_sold": 212
+      }
+    ]

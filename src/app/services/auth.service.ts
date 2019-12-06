@@ -1,72 +1,125 @@
-import { Injectable, TestabilityRegistry } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { IUser, IRole } from '../models/user';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { tap, catchError, map } from 'rxjs/operators';
+import { throwError, Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { UserService } from './user.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService{
 
-  _currentUser: IUser;
-  get currentUser(){
-    return this._currentUser;
+  loginUrl = environment.apiUrl + "login"
+
+  currentUser: IUser;
+  redirectUrl: string;
+  errorMessage: any;
+  retrievingUser = false;
+  retrievingRole = false;
+
+  constructor(private http: HttpClient,
+              private userService: UserService,
+              private router: Router) { this.init(); }
+
+  init(): void{
+    var currentUser = JSON.parse(localStorage.getItem('currentUser')); 
+    if(currentUser !== null){
+      this.currentUser = currentUser;
+      this.getUserRole(currentUser.role_id);
+    }
   }
-  set currentUser(user:IUser){
-    this._currentUser = user;
+
+  login(username:string, password:string){
+    this.retrievingUser = true;
+    return this.http.post<any>(this.loginUrl, {username: username, password: password}).pipe(
+      map(user =>{
+        if(user){
+          this.getUserRole(user.role_id);
+          this.setUpCurrentUser(user);
+          this.retrievingUser = false;
+        }
+        return user;
+      }),
+      catchError(this.handleError)
+    )
   }
 
-  Users: IUser[] = 
-  [{
-      Id: 0,
-      Role: 0,
-      Username: "tester@gmail.com",
-      Password: "password",
-      Email: "tester@gmail.com",
-      First_name: "Tester",
-      Last_name: "Bester"
-    },
-    {
-      Id: 1,
-      Role: 1,
-      Username: "atester@gmail.com",
-      Password: "password",
-      Email: "atester@gmail.com",
-      First_name: "Tester",
-      Last_name: "Bester"
-    }]  
-  Roles: IRole[] = 
-  [{
-      Id: 0,
-      Type: "User"
-    },
-    {
-      Id: 1,
-      Type: "Admin"
-    }]
+  logout():void{
+    this.currentUser = null;
+    localStorage.removeItem('currentUser');
+    this.router.navigate(['/']);
 
-  constructor() { }
+  }
 
-  login(username:string, password:string): boolean{
-    var user = this.Users.find(u => u.Username == username && u.Password == password);
-    if(user){
-      this.currentUser = user;
-      return true;
+  isLoggedIn():boolean{
+    return !!localStorage.getItem('currentUser');
+  }
+
+  isMaster():boolean{
+    if(!this.currentUser){
+      return false;
+    }
+
+    if(this.currentUser.role){
+      return this.currentUser.role.type === "Master";
     }
 
     return false;
   }
 
-  logout():void{
-    if(this.currentUser){
-      this.currentUser = null;
+  isAdmin():boolean{
+    if(!this.currentUser){
+      return false;
+    }
+
+    if(this.currentUser.role){
+      return this.currentUser.role.type === "Admin";
+    }
+
+    return false;
+  }
+
+  setUpCurrentUser(user: IUser){
+    this.currentUser = user;
+    localStorage.setItem('currentUser', JSON.stringify(user));
+
+    var cartStore = JSON.parse(localStorage.getItem('cart'));
+    if(cartStore){
+      if(user.username !== cartStore['user']){
+        localStorage.removeItem('cart');
+      }
     }
   }
 
-  getUserById(id: number): IUser{
-    var user = this.Users.find(u => u.Id === id);
-    if(user){
-      return user;
+  getUserRole(id:number){
+    if(id){
+      this.retrievingRole = true;
+      this.userService.getRoleById(id).subscribe({
+        next: role => {
+          this.currentUser.role = role; 
+          this.retrievingRole = false;
+        },
+        error: err => {
+          this.errorMessage = err; 
+          this.retrievingRole = false;
+        }
+      });
+    }else{
+      console.error("There was an issue getting role of user on storage");
     }
+  }
 
-    return null;
+  private handleError(err: HttpErrorResponse){
+    let errorMessage = '';
+    if(err.error instanceof ErrorEvent){
+      errorMessage = `An error occurred: ${err.error.message}`;
+    }else{
+      errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
+    }
+    console.error(errorMessage);
+    return throwError(errorMessage);
   }
 }

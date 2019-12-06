@@ -1,0 +1,27 @@
+<div class="page-container">
+    <h1 class="heading-border admin-heading">Admin Control</h1>
+    <hr>
+    <div class="section-window">
+        <div class="m-5">
+            <h2 class="heading">Controls</h2>
+            <div class="control-container row justify-content-center">
+                <div class="control col-xs-3">
+                    <a routerLink='add-product' role="button" class="control-link btn btn-outline-dark">Add Product</a>
+                </div>
+                <div class="control col-xs-3">
+                    <a routerLink='add-blog' role="button" class="control-link btn btn-outline-dark">Add Blog</a>
+                </div>
+                <div class="control col-xs-3">
+                    <a routerLink='view-orders' role="button" class="control-link btn btn-outline-dark">View Orders</a>
+                </div>
+                <div *ngIf="isMaster" class="control col-xs-3">
+                    <a routerLink='users' role="button" class="control-link btn btn-outline-dark">Users</a>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

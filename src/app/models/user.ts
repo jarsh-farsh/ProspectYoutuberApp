@@ -1,14 +1,14 @@
 export interface IUser{
-    Id:number,
-    Role:number,
-    Username:string,
-    Password:string,
-    Email:string,
-    First_name:string,
-    Last_name:string
+    id:number,
+    role:IRole,
+    username:string,
+    password:string,
+    email:string,
+    first_name:string,
+    last_name:string
 }
 
 export interface IRole{
-    Id:number,
-    Type:string
+    id:number,
+    type:string
 }

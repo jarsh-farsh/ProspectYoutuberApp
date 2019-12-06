@@ -1,0 +1,39 @@
+<div class="page-container">
+    <div *ngIf="needConfirmationBlogs">
+        <div *ngIf="isMaster && needConfirmationBlogs.length > 0">
+            <h2>Blogs that need confirmation</h2>
+            <div class="blog-confirm">
+                <ul *ngFor="let blog of needConfirmationBlogs">
+                    <li class="d-flex justify-content-between">
+                        <div class="blog-confirm-desc">
+                            <p>Title: {{ blog.title }}</p>
+                            <p>Author: {{ blog.user?.username }}</p>
+                            <p>Created on: {{ blog.created_on | date }}</p>
+                        </div>
+                        <div class="blog-confirm-tools">
+                            <a role="button" [routerLink]="['/blog', 'entry', blog.id]" class="btn btn-primary btn-sm" title="remove">Review</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="blog-container">
+        <h1 class="heading">Add Blog</h1>
+        <form [formGroup]="blogForm">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Title" formControlName="title">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" placeholder="Body..." rows="5" formControlName="body"></textarea>
+            </div>
+            <div class="form-group text-center">
+                <button class="btn btn-outline-primary" style="width:150px" (click)="submitBlog()"
+                    [disabled]="!blogForm.valid" [title]="blogForm.valid ? 'Submit' : 'Complete entry to submit'">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
