@@ -4,6 +4,9 @@ This is currently a work in progress.
 
 What's left to do:
 
-Finish pages
-Hook up a database back-end for merchandise, users, and blog.
+1) Lots of polish to front-end.
+2) Features needed on some pages as well as need to be finished.
+3) JWT authetication of users
+4) E-mail service 
+5) Admin functionality
 
