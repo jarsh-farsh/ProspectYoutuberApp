@@ -7,7 +7,7 @@ import { GlobalMessageService } from 'src/app/services/global-message.service';
 import { GlobalMessage } from 'src/app/models/globalMessage';
 
 @Component({
-  selector: 'pip-header',
+  selector: 'app-pip-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })

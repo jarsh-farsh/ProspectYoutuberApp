@@ -31,7 +31,7 @@
                         </select>
                     </div>
                 </div>
-                <button class="btn btn-outline-primary" (click)="addToCart(product.id)" [disabled]="!productForm.valid"
+                <button class="btn btn-outline-primary" (click)="addToCart(product)" [disabled]="!productForm.valid"
                     [title]="!productForm.valid ? 'Please select a quantity to add to cart' : 'Add to cart'">
                     Add To Cart
                 </button>

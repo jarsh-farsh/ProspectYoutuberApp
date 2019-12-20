@@ -23,6 +23,9 @@ export class MerchComponent implements OnInit {
 
   errorMessage:string;
 
+  productLoading: boolean;
+  productTagLoading: boolean;
+
   get PopularProducts(){
     return this.productService.getPopularProducts();
   }
@@ -30,67 +33,47 @@ export class MerchComponent implements OnInit {
   constructor(private productService: ProductService) { }
 
   ngOnInit() {
-    this.productService.getProducts().subscribe({
+    this.productService.getProducts(true).subscribe({
       next: data => {  
-        this.products = this.populateProducts(data);
-        this.filteredProducts = this.products;
+        this.productLoading = true;
+        this.products = this.productService.populateProducts(data);
+        this.filteredProducts = this.products;    
+        if(this.searchFilter === ''){
+          this.filteredProducts = this.products;
+        }else{
+          this.filterProductsBySearch();
+        }
       },
-      error: err => this.errorMessage = err
+      error: err => this.errorMessage = err,
+      complete: () => this.productLoading = false
     });
 
     this.productService.getTags().subscribe({
-      next: tags => this.populateTags(tags),
-      error: err => this.errorMessage = err
+      next: tags => {
+        this.productTagLoading = true;
+        this.populateTags(tags);
+        this.productService.getProductTags().subscribe({
+          next: productTags => this.populateProductTags(productTags),
+          error: err => this.errorMessage = err
+        })
+      },
+      error: err => this.errorMessage = err,
+      complete: () => this.productTagLoading = false
     });
 
-    this.productService.getProductTags().subscribe({
-      next: productTags => this.populateProductTags(productTags),
-      error: err => this.errorMessage = err
-    })
 
-    if(this.searchFilter === ''){
-      this.filteredProducts = this.products;
-    }else{
-      this.filterProductsBySearch();
-    }
-  }
-
-  populateProducts(data : any): Product[]{
-    var productsData = data.products;
-    var imageUrlsData = data.imageUrls;
-    var products: Product[] = [];
-
-    for(var i = 0; i < productsData.length; i++){
-      var product = new Product();
-      product = productsData[i];
-      var test = imageUrlsData.filter(i => i.prod_id === product.id);
-      for(var j = 0; j < test.length; j++){
-        if(!product.image_url) product.image_url = [];
-        let url = test[j].url;
-        product.image_url.push(url);
-      }
-      products.push(product);
-    }
-    
-    return products;
   }
 
   populateTags(data:any[]):void{
-    for(var i = 0; i < data.length; i++){
-      var newProdTag = new ProductTag();
-      newProdTag.id = data[i].tagid;
-      newProdTag.type = data[i].categoryname;
-      newProdTag.name = data[i].tagname;
-      this.productTags[i] = newProdTag;
-      
-    }
+    this.productTags = data;
+
     this.availableTags = this.productTags;
     this.availableTags = this.availableTags.sort((a,b) => (a.name > b.name) ? 1 : -1);
   }
 
   populateProductTags(data:any[]):void{
     for(var i = 0; i < this.products.length; i++){
-      var tags = data.filter(d => d.product_id == this.products[i].id);
+      var tags = data.filter(d => d.prod_id == this.products[i].id);
       for(var j = 0; j < tags.length; j++){
         if(!this.products[i].Tags) this.products[i].Tags = [];
         this.products[i].Tags.push(tags[j].tag_id);

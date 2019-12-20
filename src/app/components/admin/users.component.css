@@ -1,0 +1,62 @@
+
+.user-container{
+    width:100%;
+    max-width: 1000px;
+    margin:0 auto
+}
+
+.users-bulk{
+    overflow-y:scroll;
+    overflow-x:hidden;
+    height:200px;
+    border:1px solid gainsboro;
+    padding:5px;
+}
+
+.bulk-heading h5{
+    text-align: center;
+    border-bottom: 1px solid gainsboro;
+}
+
+.bulk-user{
+    display:inline-block;
+    padding:5px;
+    width:33.3%;
+}
+.bulk-users-pages{
+    margin:5px;
+}
+.bulk-users-pages ul{
+    display:flex;
+    list-style-type: none;
+    margin:0;
+    padding:0;
+}
+.bulk-users-pages li{
+    font-size:20px;
+    padding:0 5px;
+    margin-right:5px;
+    cursor:pointer;
+    color:rgb(67, 67, 197);
+    transition: all .2s ease;
+}
+.bulk-users-pages li:hover{
+    background-color:gainsboro;
+    border-bottom: 2px solid rgb(67, 67, 197);
+}
+.bulk-users-pages li:active{
+    background-color:rgb(192, 192, 192);
+}
+.page-active{
+    background-color:gainsboro;
+    border-bottom: 2px solid rgb(67, 67, 197);
+}
+
+@media only screen and (max-width: 600px){
+    .bulk-names{
+        display: none !important;
+    }
+    .bulk-user{
+        width:50% !important;
+    }
+}

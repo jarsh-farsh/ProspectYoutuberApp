@@ -1,7 +1,110 @@
 <div class="page-container">
     <h1 class="heading">Add Product</h1>
+    <!-- Adding Images -->
     <div class="text-center">
-        <h4>Upload image(s) for product</h4>
-        <input class="border" type="file" (change)="onFileSelected($event)" placeholder="Upload a file" multiple>
+        <h2>Upload image(s) for product</h2>
+        <label *ngIf="!imageUrls" for="imageUpload" class="image-toggle-button">
+            Upload Images <i class="fa fa-circle-o-notch fa-spin" [hidden]="!addingImages"></i>
+        </label>
+        <input id="imageUpload" style="display: none" type="file" (change)="onFileSelected($event)"
+            placeholder="Upload a file" multiple>
+        <div *ngIf="imageUrls">
+            <div class="image-url-container">
+                <h3>Images selected</h3>
+                <div *ngIf="imageUrls.length > 1">
+                    <p>( The first image will be the main image of the product. )</p>
+                    <p>( To change the main image, click on the one below that you would like to be the main )</p>
+                </div>
+                <div class="image-url">
+                    <ul class="justify-content-center">
+                        <div class="main-product-image">
+                            <li>Main: <img [src]="imageUrls[0]"> <button class="product-remove"
+                                    (click)="removeImage(0)"><i class="fa fa-trash"></i></button></li>
+                        </div>
+                        <div *ngIf="imageUrls.length > 1">
+                            <button class="image-toggle-button" (click)="toggleImages()">
+                                <p>{{ showImageMessage }}</p>
+                                <i *ngIf="!showImages" class="fa fa-arrow-down"></i>
+                                <i *ngIf="showImages" class="fa fa-arrow-up"></i>
+                            </button>
+                        </div>
+                        <div class="row justify-content-center" [hidden]="!showImages">
+                            <div *ngFor="let url of imageUrls; let i = index">
+                                <div class="" *ngIf="i !== 0">
+                                    <li class="product-image m-4 col-xs-3" (click)="changeMainImage(i)"><img class="p-1"
+                                            [src]="url"></li>
+                                    <button class="product-remove" (click)="removeImage(i)"><i
+                                            class="fa fa-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Adding Product Tags -->
+    <div class="product-tags">
+        <h2 class="p-1">Add tags</h2>
+        <div class="row p-3">
+            <div class="col-sm-6 border p-3">
+                <h4>Available tags</h4>
+                <p class="text-center">Click on tags to add to product</p>
+                    <h5>Clothing Type</h5>
+                    <div *ngFor="let tag of availableTags; let i = index" class="d-inline-block">
+                            <button *ngIf="tag.type === 'Clothing'" class="product-remove m-1"
+                                (click)="addTag(i)">{{ tag.name }}
+                            </button>
+                    </div>
+                    <h5>Gender</h5>
+                    <div *ngFor="let tag of availableTags; let i = index" class="d-inline-block">
+                            <button *ngIf="tag.type === 'Gender'" class="product-remove m-1"
+                                (click)="addTag(i)">{{ tag.name }}
+                            </button>
+                    </div>
+            </div>
+            <div class="col-sm-6 border p-3">
+                <h4>Selected tags</h4>
+                <h5 *ngIf="selectedTags.length === 0" class="text-center">Empty</h5>
+                <div *ngIf="selectedTags.length > 0">
+                    <p class="text-center">Click tag to remove from product</p>
+                    <div class="row justify-content-center p-1">
+                        <div *ngFor="let tag of selectedTags; let i = index">
+                            <div class="col-sm-2 p-2">
+                                <button class="product-remove" (click)="removeTag(i)">{{ tag.name }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Adding Product Data -->
+    <div class="product-form">
+        <form [formGroup]="prodForm">
+            <div class="form-group">
+                <input type="text" class="form-control" formControlName="name" placeholder="Name">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" formControlName="description" placeholder="Write a description..."
+                    rows="5"></textarea>
+            </div>
+            <div class="form-group d-flex">
+                <p class="price-sign">$</p>
+                <input type="number" class="form-control" min="0" formControlName="price" placeholder="Price"
+                    (blur)="priceChanged()">
+            </div>
+            <div class="form-group">
+                <input type="number" class="form-control" min="0" formControlName="quantity"
+                    placeholder="Initial quantity in stock...">
+            </div>
+            <div class="text-center">
+                <button class="btn btn-outline-danger" style="width:180px; padding:10px" (click)="confirmProd()"
+                    [disabled]="!prodForm.valid">Submit <i class="fa fa-circle-o-notch fa-spin"
+                        [hidden]="!addingProduct"></i>
+                </button>
+
+            </div>
+        </form>
     </div>
 </div>

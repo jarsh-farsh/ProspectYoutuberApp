@@ -6,6 +6,8 @@ import { throwError, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserService } from './user.service';
 import { environment } from 'src/environments/environment';
+import { GlobalMessageService } from './global-message.service';
+import { HTTP_UTILS } from '../utils/utilities';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +24,7 @@ export class AuthService{
 
   constructor(private http: HttpClient,
               private userService: UserService,
+              private gmService: GlobalMessageService,
               private router: Router) { this.init(); }
 
   init(): void{
@@ -40,16 +43,19 @@ export class AuthService{
           this.getUserRole(user.role_id);
           this.setUpCurrentUser(user);
           this.retrievingUser = false;
+          this.gmService.addMessage(`Welcome ${user.username}!`, "info");
+          console.log(user);
         }
         return user;
       }),
-      catchError(this.handleError)
+      catchError(HTTP_UTILS.handleError)
     )
   }
 
   logout():void{
     this.currentUser = null;
     localStorage.removeItem('currentUser');
+    this.gmService.addMessage("Successfully logged out", "info");
     this.router.navigate(['/']);
 
   }
@@ -110,16 +116,5 @@ export class AuthService{
     }else{
       console.error("There was an issue getting role of user on storage");
     }
-  }
-
-  private handleError(err: HttpErrorResponse){
-    let errorMessage = '';
-    if(err.error instanceof ErrorEvent){
-      errorMessage = `An error occurred: ${err.error.message}`;
-    }else{
-      errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
-    }
-    console.error(errorMessage);
-    return throwError(errorMessage);
   }
 }

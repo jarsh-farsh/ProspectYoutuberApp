@@ -1,1 +1,139 @@
-<p>view-orders works!</p>
+<div class="page-container">
+    <h1 class="heading">Orders</h1>
+    <div class="order-container">
+        <div *ngIf="!orderSelected">
+            <div>
+                <div class="form-group">
+                    <input type="text" 
+                        class="form-control" 
+                        placeholder="Search orders by user"
+                        [(ngModel)]="searchedUser">
+                    <p class="form-validation">{{searchedUserError}}</p>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-danger" (click)="searchBy(2)">Search</button>
+                </div>
+                <div class="form-group">
+                    <input type="text" 
+                        class="form-control" 
+                        placeholder="Search orders by number"
+                        [(ngModel)]="searchedOrder">
+                    <p class="form-validation">{{searchedOrderError}}</p>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-danger" (click)="searchBy(1)">Search</button>
+                </div>
+            </div>
+            <div class="orders-bulk-heading">
+                <div class="d-flex justify-content-between p-2" style="margin-right:15px">
+                    <h2 class="orders-heading text-center my-auto">Order</h2>
+                    <h2 class="orders-heading text-center my-auto">Date</h2>
+                    <h2 class="orders-heading text-center my-auto">Total Cost</h2>
+                </div>
+            </div>
+            <div class="orders-bulk">
+                <div *ngFor="let order of orders">
+                    <div class="d-flex justify-content-between p-2">
+                        <p class="orders-data orders-data-link text-center my-auto" 
+                        title="{{ order.order_num }}" 
+                        (click)="selectOrder([order.order_num])">
+                            <a>{{ order.order_num }}</a>
+                        </p>
+                        <p class="orders-data text-center my-auto">{{ order.created_on | date}}</p>
+                        <p class="orders-data text-center my-auto">{{ order.total_cost | currency}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="orderSelected">
+            <div class="row justify-content-center">
+                <div *ngFor="let order of selectedOrders; let i = index">
+                    <div class="col-sm-6 border" style="min-width:320px">
+                        <h5>Date Ordered: {{ order.created_on | date }}</h5>
+                        <h5>Ordered By: {{ order.user.username }}</h5>
+                        <p class="orders-data-link" (click)="toggleProductData(i)">
+                            <a>
+                                <i [ngClass]="{'fa': true, 
+                                            'fa-arrow-right': !selectedOrdersProduct[i], 
+                                            'fa-arrow-down': selectedOrdersProduct[i]}"></i> 
+                                Products
+                            </a>
+                        </p>
+                        <div class="order-product" *ngIf="selectedOrdersProduct[i]">
+                            <ul *ngFor="let item of order.items">
+                                <li>
+                                    <div>
+                                        <p><img style="width:50px; height:50px; margin:5px" [src]="getProductImage(item.product)">{{ item.product.name }}</p>
+                                        <p class="order-product-details">Quantity: {{ item.quantity }}</p>
+                                        <p class="order-product-details">Total: {{ item.quantity * item.product.price | currency }}</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="text-right p-2" style="border-bottom:1px solid gainsboro">Total: {{ order.total_cost | currency }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center m-2">
+                <button class="btn btn-danger" (click)="clearOrder()">Go Back</button>
+            </div>
+        </div>
+    </div>
+    <h1 class="heading">Product Data</h1>
+    <div class="order-container">
+        <div *ngIf="!showData">
+            <div>
+                <div class="form-group">
+                    <input type="text" 
+                        class="form-control" 
+                        placeholder="Search products by name"
+                        [(ngModel)]="searchedProduct">
+                    <p class="form-validation">{{searchedProductError}}</p>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-danger" (click)="searchBy(2)">Search</button>
+                </div>
+            </div>
+            <div class="orders-bulk-heading">
+                <div class="d-flex justify-content-between p-2" style="margin-right:15px">
+                    <h2 class="orders-heading text-center my-auto">Product</h2>
+                    <h2 class="orders-heading text-center my-auto">Total Sales</h2>
+                    <h2 class="orders-heading text-center my-auto">Total Revenue</h2>
+                </div>
+            </div>
+            <div class="orders-bulk">
+                <div *ngFor="let product of products">
+                    <div class="d-flex justify-content-between p-2">
+                        <div class="orders-data my-auto orders-data-link"
+                            title="Click for more info" 
+                            (click)="selectProduct(product)"> 
+                                <img style="width:50px; height:50px; margin:5px" [src]="getProductImage(product)">
+                                <a> {{ product.name }}</a>
+                        </div>
+                        <p class="orders-data text-center my-auto">{{ product.quantity_sold }}</p>
+                        <p class="orders-data text-center my-auto">{{ product.price * product.quantity_sold | currency }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="showData">
+            <div>
+                <table class="product-table">
+                    <thead>
+                        <th>Year</th>
+                        <th>Quantity Sold</th>
+                        <th>Revenue</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of formatedData">
+                            <td>{{ data.year }}</td>
+                            <td>{{ data.quantity }}</td>
+                            <td>{{ data.quantity * selectedProduct.price | currency }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn btn-danger" (click)="clearData()">Go Back</button>
+        </div>
+    </div>
+</div>

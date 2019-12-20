@@ -1,0 +1,63 @@
+<button class="dialog-close" (click)="cancel()">X</button>
+<h2 mat-dialog-title>{{title}}</h2>
+<div style="overflow-y:scroll; overflow-x:hidden; height:auto; max-height:500px;">
+    <div *ngIf="isProduct">
+        <div *ngIf="images.length > 0" class="prod-images text-center">
+            <h4>Images:</h4>
+            <ul *ngFor="let img of images; let i = index">
+
+                <li><i *ngIf="i === 0" class="fa fa-star p-1" title="Main Image"></i>{{img}}</li>
+            </ul>
+        </div>
+        <div *ngIf="tags.length > 0">
+            <h4>Tags applied</h4>
+            <div class="row justify-content-center">
+                <div *ngFor="let tag of tags">
+                    <p class="p-3">{{tag.name}}</p>
+                </div>
+            </div>
+        </div>
+
+        <h4>Details</h4>
+        <div class="row justify-content-center m-3">
+            <div class="col-sm-4 offset-sm-1">
+                Name
+            </div>
+            <div class="col-sm-4 offset-sm-1">
+                {{ name }}
+            </div>
+            <div class="col-sm-4 offset-sm-1">
+                Description
+            </div>
+            <div class="col-sm-4 offset-sm-1">
+                {{ prodDescription }}
+            </div>
+            <div class="col-sm-4 offset-sm-1">
+                Price
+            </div>
+            <div class="col-sm-4 offset-sm-1">
+                {{ price }}
+            </div>
+            <div class="col-sm-4 offset-sm-1">
+                Quantity
+            </div>
+            <div class="col-sm-4 offset-sm-1">
+                {{ quantity }}
+            </div>
+        </div>
+
+        <div *ngIf="!images || images.length === 0" class="text-center">
+            <h4>No images were added for this product</h4>
+        </div>
+    </div>
+
+    <mat-dialog-content class="text-center">
+        <h4>{{description}}</h4>
+    </mat-dialog-content>
+
+</div>
+
+<mat-dialog-actions class="float-right">
+    <button class="btn btn-light m-1" (click)="cancel()">Cancel</button>
+    <button class="btn btn-danger m-1" (click)="confirm()">Confirm</button>
+</mat-dialog-actions>

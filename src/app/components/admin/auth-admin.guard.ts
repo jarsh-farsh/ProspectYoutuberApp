@@ -19,6 +19,7 @@ export class AuthAdminGuard implements CanActivate {
   }
 
   isAdmin(url:string):boolean{
+    console.log(this.authService.currentUser);
     if(this.authService.isMaster()) return true;
     if(this.authService.isAdmin()) return true;
 

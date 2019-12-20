@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SocialMediaData } from 'src/app/services/social-media.service';
 
 @Component({
-  selector: 'pip-footer',
+  selector: 'app-pip-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.css']
 })

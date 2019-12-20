@@ -4,13 +4,15 @@
     border:1px solid gainsboro;
 }
 
-.main-image img{
-    display:block;
-    max-width: 320px;
-    min-width: 210px;
+.main-image {
     border: 1px solid gainsboro;
+}
+
+.main-image img{
     padding:15px;
-    height:auto;
+    width: 480px;
+    height: 380px;
+    object-fit: contain;
 }
 
 .merch-description{
@@ -22,21 +24,29 @@
 }
 
 .image-toggler{
-    margin: auto 0;
+    width:320px;
+    margin:5px auto;
 }
 
 .image-toggler ul{
+    display:inline-block;
     list-style-type: none;
     margin: 0;
     padding:0;
+}
+.image-toggler li{
+    display:inline-block;
+    margin: 0 2px;    
+    padding:2px;
+    border: 1px solid gainsboro;
+}
+.image-toggler li:hover{
+    border:1px solid black;
+    cursor: pointer;
 }
 
 .image-toggler img{
     width:50px;
     height:50px;
-    border: 1px solid gainsboro;
-}
-
-.main-image{
 
 }

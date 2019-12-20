@@ -5,12 +5,11 @@ import { RouterModule } from '@angular/router';
 import { ProductTabComponent } from './product-tab.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material';
-import { CheckImgUrlPipe } from './checkImgUrl.pipe';
+
 
 @NgModule({
   declarations: [
-    ProductTabComponent,
-    CheckImgUrlPipe
+    ProductTabComponent
   ],
   imports: [
     CommonModule,
@@ -23,8 +22,8 @@ import { CheckImgUrlPipe } from './checkImgUrl.pipe';
     ProductTabComponent,
     CommonModule,
     FormsModule,
-    CheckImgUrlPipe,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule
   ]
 })
 export class SharedModule { }

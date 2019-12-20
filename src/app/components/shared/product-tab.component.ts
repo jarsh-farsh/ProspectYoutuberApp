@@ -3,7 +3,6 @@ import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
 import { CartService } from 'src/app/services/cart.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { GlobalMessageService } from 'src/app/services/global-message.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -33,12 +32,11 @@ export class ProductTabComponent implements OnInit{
         this.productForm = this.fb.group({
             quantity: ['', [Validators.required]]
         })
-
         this.message = '';
     }
     
     getProductImage(product: Product){
-        if(product && product.image_url){
+        if(product && product.image_url.length > 0){
             return environment.imagesUrl + product.image_url[0]
         }
         return environment.imagesUrl + 'no-picture.jpg'
@@ -48,8 +46,8 @@ export class ProductTabComponent implements OnInit{
         return this.prodService.isPopularProduct(product);
     }
 
-    addToCart(prodId: number): void{      
+    addToCart(product: Product): void{      
         var quantity = this.productForm.get('quantity').value;    
-        this.cartService.AddItem(prodId, quantity);
+        this.cartService.AddItem(product, quantity);
     }
 }

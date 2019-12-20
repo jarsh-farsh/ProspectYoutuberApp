@@ -101,6 +101,31 @@ html,body{
     color:red;
 }
 
+.dialog-close{
+    float:right;
+    margin-top: -20px;
+    margin-right: -20px;
+    padding:5px 10px;
+    color:black;
+    border-radius: 100%;
+    border:3px solid white;
+    font-weight: bold;
+    transition: all .2s ease;
+}
+
+.dialog-close button, button:focus{
+    outline: none;
+    background-color:white;
+}
+
+.dialog-close:hover{
+    background-color: gainsboro;
+}
+
+.dialog-close:active{
+    border:3px solid rgb(236, 236, 236);
+}
+
 @media only screen and (max-width: 600px){
     .heading-border{
         height: 60px;
@@ -128,6 +153,22 @@ html,body{
     }
 }
 
+/* Utilities */
+::-webkit-scrollbar {
+    width: 15px;
+}
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+    border-radius: 25px;
+}
+::-webkit-scrollbar-thumb {
+    background-color:darkgray;
+    outline: 1px solid slategray;
+    border-radius: 25px;
+}
+::-webkit-scrollbar-thumb:hover{
+    background-color:rgb(141, 141, 141);
+}
 
 /* Bootstrap override */
 

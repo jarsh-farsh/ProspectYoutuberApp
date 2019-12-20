@@ -5,6 +5,7 @@ import { BlogService } from 'src/app/services/blog.service';
 import { Blog } from 'src/app/models/blog';
 import { UserService } from 'src/app/services/user.service';
 import { IUser } from 'src/app/models/user';
+import { GlobalMessageService } from 'src/app/services/global-message.service';
 
 @Component({
   selector: 'app-add-blog',
@@ -13,6 +14,7 @@ import { IUser } from 'src/app/models/user';
 })
 export class AddBlogComponent implements OnInit {
 
+  id: number = 1;
   blogForm: FormGroup;
   needConfirmationBlogs: Blog[];
   errorMessage: string;
@@ -24,14 +26,15 @@ export class AddBlogComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private authSerivce: AuthService,
               private blogService: BlogService,
-              private userService: UserService) { }
+              private userService: UserService,
+              private gmService: GlobalMessageService) { }
 
   ngOnInit() {
     this.blogForm = this.fb.group({
       title: ['', [Validators.required]],
       body: ['', [Validators.required]]      
     })
-
+    
     this.updateConfirmedBlogs();
   }
 
@@ -63,7 +66,6 @@ export class AddBlogComponent implements OnInit {
       blogs.push(tmp);
     }
     this.needConfirmationBlogs = blogs;
-    console.log(data);
   }
 
   submitBlog(){
@@ -76,11 +78,11 @@ export class AddBlogComponent implements OnInit {
     this.blogService.addBlog(blog).subscribe({
       next: data => {
         if(data.error){
-          console.error("There was an error adding blog: ", + data.error);
+          this.gmService.addMessage("There was an error adding the blog, " + data.message, "error");
         }else{
-          console.log("It worked!");
           this.updateConfirmedBlogs();
           this.blogForm.reset();
+          this.gmService.addMessage("Successfully added the blog " + title, "success");
         }
       },
       error: err => this.errorMessage = err

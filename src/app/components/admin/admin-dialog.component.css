@@ -1,0 +1,16 @@
+
+.prod-images ul{
+    text-align: left;
+    width:200px;
+    margin:0 auto;
+    list-style-type: none;
+    padding:0;
+}
+.prod-images li{
+    background-color: rgb(246, 253, 255);
+    margin:5px;
+}
+
+.product-description{
+    list-style-type: none;
+}

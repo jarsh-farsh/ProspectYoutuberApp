@@ -56,7 +56,8 @@ export class SignupComponent implements OnInit {
       lastName: ['',[Validators.required, Validators.maxLength(12)]],
       emailGroup: this.fb.group({
         email:['', [Validators.required, Validators.email]],
-        confirmEmail:['', [Validators.required, Validators.email]]
+        confirmEmail:['', [Validators.required,
+                           Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]]
       }, {validator: emailMatcher}),
       passwordGroup: this.fb.group({
         password: ['', [Validators.required, Validators.maxLength(25)]],
@@ -82,7 +83,6 @@ export class SignupComponent implements OnInit {
               if(!user){
                 this.formError = "There was an error logging in your new account! Oops!";
               }else{
-                this.gmSerivce.addMessage(`Welcome aboard ${user.username}!`, 'info');
                 if (this.authService.redirectUrl) {
                   this.router.navigateByUrl(this.authService.redirectUrl);
                 } else {

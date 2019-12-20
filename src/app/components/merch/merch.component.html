@@ -54,20 +54,23 @@
                 </div>
             </form>
         </div>
+        <div *ngIf="productLoading || productTagLoading">
+            
+        </div>
+        <div *ngIf="!productLoading && !productTagLoading">
+            <div class="row justify-content-center">
 
-        <div class="row justify-content-center">
+                <div *ngIf="filteredProducts.length === 0">
+                    <h5>We couldn't find what you were looking for. Please try again!</h5>
+                </div>
 
-            <div *ngIf="filteredProducts.length === 0">
-                <h5>We couldn't find what you were looking for. Please try again!</h5>
-            </div>
+                <div *ngFor="let product of filteredProducts">
 
-            <div *ngFor="let product of filteredProducts">
-
-                <div class="col-sm-3">
-                    <prod-tab [product]='product'></prod-tab>
+                    <div class="col-sm-3">
+                        <prod-tab [product]='product'></prod-tab>
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>

@@ -13,6 +13,7 @@ import { GlobalMessageComponent } from './components/shared/global-message.compo
 import { AdminModule } from './components/admin/admin.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FileUploadModule } from 'ng2-file-upload';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [

@@ -20,9 +20,9 @@
                                 <li>
                                     <div class="d-flex justify-content-between">
                                         <div class="d-flex text-left">
-                                            <img [src]="item.Product.image_url"
+                                            <img [src]="getProductImg(item.product.image_url[0])"
                                                  style="width:100px; height:100px">
-                                            <h5 style="padding:50px 10px;">{{ item.Product.name }}</h5>
+                                            <h5 style="padding:50px 10px;">{{ item.product.name }}</h5>
                                         </div>
                                         <div class="text-right" style="width:160px">
                                                 <div class="input-group m-1">
@@ -31,14 +31,14 @@
                                                         </div>
                                                         <input type="text" class="form-control text-right" [placeholder]="item.Quantity" [(ngModel)]="updateQuantity[i]">
                                                     </div>
-                                            <p>Cost: {{ item.Quantity * item.Product.price | currency}}</p>
+                                            <p>Cost: {{ item.Quantity * item.product.price | currency}}</p>
                                         </div>
                                     </div>
                                     <div class="text-right">
                                         <button class="btn btn-primary btn-sm m-1" style="font-weight: bold" title="Update"
-                                            (click)="updateItem(item.Product.id, updateQuantity[i], i)">Update</button>
+                                            (click)="updateItem(item.product.id, updateQuantity[i], i)">Update</button>
                                         <button class="btn btn-danger btn-sm m-1" style="font-weight: bold" title="Remove"
-                                            (click)="removeItemFromCart(item.Product.id, i)">Remove</button>
+                                            (click)="removeItemFromCart(item.product.id, i)">Remove</button>
                                         <p *ngIf="showErrorMessage[i]" class="form-validation">{{ errorMessage[i] }}</p>
                                     </div>
                                 </li>

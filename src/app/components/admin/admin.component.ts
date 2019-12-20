@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -9,17 +9,33 @@ import { Router } from '@angular/router';
 })
 export class AdminComponent implements OnInit {
 
+  tabSelected: number;
+
   get isMaster():boolean{
     return this.authService.isMaster();
   }
 
   constructor(private authService: AuthService,
-              private router: Router) { }
+              private router: Router,
+              private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    if(!this.authService.isAdmin){
-      this.router.navigate(['/home']);
-    }
+    
+
+    this.tabSelected;
+  }
+
+  changeActive(id:number){
+    if(this.tabSelected === id) return;
+    this.tabSelected = id;
+  }
+
+  isActive(id: number){
+    return id === this.tabSelected;
+  }
+
+  onActivate(event: any){
+    this.tabSelected = event.id;
   }
 
 }

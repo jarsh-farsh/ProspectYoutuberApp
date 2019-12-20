@@ -1,26 +1,28 @@
 <div class="page-container">
-    <div *ngIf=!product>
+    <div *ngIf="!product || productLoading || productTagLoading">
         <h1>Getting data</h1>
     </div>
     <div *ngIf="product" class="merch-details">
         <div class="row">
-            <div class="col-md-2 offset-md-1 border d-flex justify-content-center">
+            <div class="col-xl-4 text-center">
 
-                    <div class="image-toggler">
-                        <ul *ngFor="let img of product.image_url; let i = index">
-                            <img src="{{ ProdImage(i) | checkImgUrl | async}}">
-                        </ul>
-                    </div>
-                    <div class="p-1 main-image" style="display:inline-block">
-                        <img [src]="ProdImage(selectedImgIndex)" [title]="product.name">
-                    </div>
+                <div class="p-1 main-image" style="display:inline-block">
+                    <img [src]="GetProductImage(selectedImgIndex)" [title]="product.name" (error)="ImageError(selectedImgIndex)">
+                </div>
+                <div class="image-toggler">
+                    <ul *ngFor="let img of product.image_url; let i = index">
+                        <li>
+                            <img [src]="GetProductImage(i)" (error)="ImageError(i)" (mouseenter)="selectImg(i)" >
+                        </li>
+                    </ul>
+                </div>
 
             </div>
-            <div class="col-md-6 offset-md-1">
+            <div class="col-xl-8">
                 <div class="text-center">
                     <h1>{{product.name}}</h1>
                 </div>
-                <div class="merch-description text-center">
+                <div class="merch-description text-center p-5 m-5">
                     <p>{{product.description}}</p>
                 </div>
                 <div class="text-right p-2" style="width:100%">
@@ -28,41 +30,42 @@
                 </div>
                 <div class="text-right p-2">
                     <div class="form-inline justify-content-end">
-                            <div *ngIf="!canAddToCart">
-                                    <form [formGroup]="productForm">
-                                        <div class="form-group">
-                                            <label class="sr-only" for="quantityFormInput">Quantity</label>
-                                            <div class="input-group m-1">
-                                                <div class="input-group-prepend">
-                                                    <div class="input-group-text">Quantity: </div>
-                                                </div>
-                                                <select class="form-control" formControlName="quantity">
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
-                                                    <option>4</option>
-                                                    <option>5</option>
-                                                    <option>6</option>
-                                                    <option>7</option>
-                                                    <option>8</option>
-                                                    <option>9</option>
-                                                    <option>10</option>
-                                                </select>
-                                            </div>
+                        <div *ngIf="!canAddToCart">
+                            <form [formGroup]="productForm">
+                                <div class="form-group">
+                                    <label class="sr-only" for="quantityFormInput">Quantity</label>
+                                    <div class="input-group m-1">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Quantity: </div>
                                         </div>
-                                        <button class="btn btn-outline-primary" (click)="addToCart(product.id)" [disabled]="!productForm.valid"
-                                            [title]="!productForm.valid ? 'Please select a quantity to add to cart' : 'Add to cart'">
-                                            Add To Cart
-                                        </button>
-                                    </form>
+                                        <select class="form-control" formControlName="quantity">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                            <option>6</option>
+                                            <option>7</option>
+                                            <option>8</option>
+                                            <option>9</option>
+                                            <option>10</option>
+                                        </select>
+                                    </div>
                                 </div>
+                                <button class="btn btn-outline-primary" (click)="addToCart()"
+                                    [disabled]="!productForm.valid"
+                                    [title]="!productForm.valid ? 'Please select a quantity to add to cart' : 'Add to cart'">
+                                    Add To Cart
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
-        
+
     </div>
 
-    <a class="btn btn-danger btn-lg m-3" role="button" style="font-weight: bold;" [routerLink]="['/merch']">< Back To Merch</a>
-</div>
+    <a class="btn btn-danger btn-lg m-3" role="button" style="font-weight: bold;" [routerLink]="['/merch']">
+        < Back To Merch</a> </div>

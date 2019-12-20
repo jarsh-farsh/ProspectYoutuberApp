@@ -1,4 +1,5 @@
 <div class="page-container">
+    <h1 class="heading">Add Blog</h1>
     <div *ngIf="needConfirmationBlogs">
         <div *ngIf="isMaster && needConfirmationBlogs.length > 0">
             <h2>Blogs that need confirmation</h2>
@@ -20,7 +21,6 @@
     </div>
     
     <div class="blog-container">
-        <h1 class="heading">Add Blog</h1>
         <form [formGroup]="blogForm">
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Title" formControlName="title">

@@ -1,15 +1,20 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { GlobalMessageComponent } from './components/shared/global-message.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule, HttpClientModule
       ],
       declarations: [
-        AppComponent
+        AppComponent, HeaderComponent, FooterComponent, GlobalMessageComponent
       ],
     }).compileComponents();
   }));
@@ -26,10 +31,4 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('pip');
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('pip app is running!');
-  });
 });

@@ -2,26 +2,27 @@
     <h1 class="heading-border admin-heading">Admin Control</h1>
     <hr>
     <div class="section-window">
-        <div class="m-5">
+        <div>
             <h2 class="heading">Controls</h2>
             <div class="control-container row justify-content-center">
                 <div class="control col-xs-3">
-                    <a routerLink='add-product' role="button" class="control-link btn btn-outline-dark">Add Product</a>
+                    <a routerLink='add-product' id="prod" [ngClass]="{'control-link': true, active: isActive(0)}" (click)="changeActive(0)">Add Product</a>
                 </div>
                 <div class="control col-xs-3">
-                    <a routerLink='add-blog' role="button" class="control-link btn btn-outline-dark">Add Blog</a>
+                    <a routerLink='add-blog' id="blog" [ngClass]="{'control-link': true, active: isActive(1)}" (click)="changeActive(1)">Add Blog</a>
                 </div>
                 <div class="control col-xs-3">
-                    <a routerLink='view-orders' role="button" class="control-link btn btn-outline-dark">View Orders</a>
+                    <a routerLink='view-orders' id="order" [ngClass]="{'control-link': true, active: isActive(2)}" (click)="changeActive(2)">View Orders</a>
                 </div>
                 <div *ngIf="isMaster" class="control col-xs-3">
-                    <a routerLink='users' role="button" class="control-link btn btn-outline-dark">Users</a>
+                    <a routerLink='users' id="users" [ngClass]="{'control-link': true, active: isActive(3)}" (click)="changeActive(3)">Users</a>
                 </div>
             </div>
         </div>
-        <hr>
+
         <div>
-            <router-outlet></router-outlet>
+            <router-outlet (activate)="onActivate($event)"></router-outlet>
         </div>
+
     </div>
 </div>

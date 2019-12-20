@@ -1,21 +1,24 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { IUser, IRole } from '../models/user';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  userUrl = "http://localhost:4000/api/users"
-  roleUrl = "http://localhost:4000/api/roles"
+  userUrl = environment.apiUrl + "users"
+  roleUrl =  environment.apiUrl + "roles"
 
   constructor(private http:HttpClient) { }
 
-  getAllUsers(): Observable<IUser[]>{
-    return this.http.get<IUser[]>(this.userUrl).pipe(
+  getAllUsers(getRoles = false): Observable<IUser[]>{
+    const params = new HttpParams().set('getRoles', getRoles.toString());
+    
+    return this.http.get<IUser[]>(this.userUrl, {params: params}).pipe(
       catchError(this.handleError)
     );
   }
@@ -28,6 +31,36 @@ export class UserService {
 
   addUser(user:any):Observable<any>{
     return this.http.post<any>(this.userUrl, user).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  updateUser(user:any):Observable<any>{
+    return this.http.put(this.userUrl, user).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  deleteUser(user:any):Observable<any>{
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      body: user
+    }
+    return this.http.delete(this.userUrl, options).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  removeUser(user:any):Observable<any>{
+    return this.http.delete(this.userUrl, user).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getAllRoles():Observable<IRole[]>{
+    return this.http.get<IRole[]>(this.roleUrl).pipe(
       catchError(this.handleError)
     );
   }

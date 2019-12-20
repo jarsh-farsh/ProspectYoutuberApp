@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/models/product';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { IMG_UTILS } from 'src/app/utils/utilities';
+import { GlobalMessageService } from 'src/app/services/global-message.service';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-product-details',
@@ -21,25 +23,28 @@ export class MerchDetailsComponent implements OnInit {
 
   selectedImgIndex: number;
 
-  get MainProdImage(): string{
-    return environment.imagesUrl + this.product.image_url[0];
-  }
-
   getProduct(id:number): void {
-    this.productService.getProductByid(id).subscribe({
+    this.productService.getProductByid(id, true).subscribe({
       next: data => {
-        this.product = this.populateProduct(data);
+        this.product = data;
+        if(this.product === null){
+          this.gmService.addMessage("The page you wandered to doesn't exist. Strange...", 'info');
+          this.router.navigate(['/merch']);
+        }
       },
       error: err => this.errorMessage = err
     });
   }
 
-  constructor(private router: ActivatedRoute,
+  constructor(private activatedRouter: ActivatedRoute,
+              private router: Router,
               private productService: ProductService,
+              private gmService: GlobalMessageService,
+              private cartService: CartService,
               private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.sub = this.router.paramMap.subscribe(
+    this.sub = this.activatedRouter.paramMap.subscribe(
       params => {
         const id = +params.get('id');
         this.getProduct(id);
@@ -58,26 +63,27 @@ export class MerchDetailsComponent implements OnInit {
     this.sub.unsubscribe();
   }
 
-  populateProduct(data: any): Product{
-    var product = new Product();
-    product = data.product;
-    var urls = Object.keys(data.imageUrls).map(i => data.imageUrls[i]);
-    for(var i = 0; i < urls.length; i++){
-      if(!product.image_url) product.image_url = [];
-      product.image_url.push(urls[i].url);
+  GetProductImage(index: number){
+    if(this.product.image_url[index]){
+      return IMG_UTILS.GetImageUrl(this.product.image_url[index]);  
+    } else return IMG_UTILS.NoImageAvailable();
+  }
+
+  ImageError(index: number){
+    this.product.image_url[index] = IMG_UTILS.NoImageAvailable();
+  }
+
+  selectImg(i){
+    this.selectedImgIndex = i;
+  }
+
+  addToCart(): void{
+    var quantity = this.productForm.get('quantity').value;
+    if(quantity > 0){
+      this.cartService.AddToCart(this.product, quantity);
+    }else{
+      this.gmService.addMessage("Quantity needs to be selected.", "info");
     }
-
-    return product;
-  }
-
-  ProdImage(index: number){
-
-    return environment.imagesUrl + this.product.image_url[index];
-    
-  }
-
-  addToCart(id:number): void{
-    
   }
 
 }

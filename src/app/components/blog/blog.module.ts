@@ -4,7 +4,6 @@ import { BlogRoutingModule } from './blog-routing.module';
 import { BlogComponent } from './blog.component';
 import { BlogEntryComponent } from './blog-entry.component';
 import { BlogDialogComponent } from './blog-dialog.component';
-import { MatDialogModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -14,7 +13,6 @@ import { MatDialogModule } from '@angular/material';
   ],
   imports: [
     SharedModule,
-    MatDialogModule,
     BlogRoutingModule
   ],
   entryComponents: [BlogDialogComponent]
